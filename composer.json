@@ -1,0 +1,7 @@
+{
+    "name": "lju1pma/training-app_v2.00",
+    "type": "library",
+    "require": {
+        "phpoffice/phpspreadsheet": "^3.7"
+    }
+}
