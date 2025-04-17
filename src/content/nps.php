@@ -177,6 +177,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .slider-label {
         text-wrap: nowrap;
     }
+
+    /* TEST NEW NPS QUESTIONS */
+    .nps-question {
+        margin-bottom: 50px;
+    }
+
+    .nps-rating-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px auto 0 auto;
+        width: 50%;
+    }
+
+    /* Style the labels that contain the radio button and number */
+    .nps-rating-container label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s;
+        user-select: none;
+    }
+
+    /* Hide the radio buttons */
+    .nps-rating-container input[type="radio"] {
+        display: none;
+    }
+
+    /* Change style when the radio is selected */
+    .nps-rating-container input[type="radio"]:checked+span {
+        background-color: #007BFF;
+        color: white;
+        border-color: #007BFF;
+    }
+
+    /* Ensure span fills the label */
+    .nps-rating-container span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    .nps-rating-explanation {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px auto 0 auto;
+        /* Adjusts spacing from the edges */
+        font-size: 14px;
+        color: #666;
+        width: 45%;
+    }
+
+    .a-rating--large .a-rating__star-container {
+        gap: 5rem;
+    }
+
+    .radio-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 800px;
+        margin-left: 50px
+    }
+    
 </style>
 
 <body>
@@ -368,54 +440,363 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <h4 data-i18n="general_eval"></h4>
-                        <h5 data-i18n="general_question"></h5>
-                        <div class="rating_container -single">
-                            <div class="a-rating a-rating--large a-rating--selection">
-                                <div class="a-rating__star-container">
-                                    <label>
-                                        <input type="radio" name="nps-rating" value="1" />
-                                        <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="nps-rating" value="2" />
-                                        <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="nps-rating" value="3" />
-                                        <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="nps-rating" value="4" />
-                                        <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="nps-rating" value="5" />
-                                        <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
-                                    </label>
-                                </div>
-                                <div class="a-rating__label-container">
-                                    <span id="output" class="a-rating__label a-rating__label--complete">(0/5)</span>
+                        <!-- nps question-->
+                        <div class="nps-question-2">
+                            <h5 data-i18n="NPS_score"></h5>
+                            <div class="nps-rating-container">
+                                <label>
+                                    <input type="radio" name="nps_rating" value="1">
+                                    <span>1</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="2">
+                                    <span>2</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="3">
+                                    <span>3</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="4">
+                                    <span>4</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="5">
+                                    <span>5</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="6">
+                                    <span>6</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="7">
+                                    <span>7</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="8">
+                                    <span>8</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="9">
+                                    <span>9</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="nps_rating" value="10">
+                                    <span>10</span>
+                                </label>
+                            </div>
+                            <div class="nps-rating-explanation">
+                                <span data-i18n="not-satis"></span>
+                                <span data-i18n="much-satis"></span>
+                            </div>
+                        </div>
+                        <!-- second question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="trainer_question"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="trainer_rating" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class="output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <h4 data-i18n="NPS_score"></h4>
-                        <h5 data-i18n="main_rating"></h5>
-                        <div class="rating_container -single">
-                            <div class="a-slider">
-                                <label for="slider" class="slider-label" data-i18n="norecom"></label>
-                                <div>
-                                    <span id="slider_value" class="a-tooltip -floating-shadow-s" tooltip-type="relative" aria-haspopup="false" style="visibility: visible; left: calc(0% - 1.02625rem);">0
-                                    </span>
-                                    <input autocomplete="off" tabindex="0" id="slider" name="slider" type="range" min="0" max="10" value="0" step="1" aria-labelledby="a standard slider with both labels" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" aria-orientation="horizontal">
+                        <!-- Third question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="trainer_question_2"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="trainer_rating_2" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating_2" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating_2" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating_2" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="trainer_rating_2" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class="output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
                                 </div>
-                                <label for="slider" class="slider-label" data-i18n="recom"></label>
                             </div>
-                            <p class="-size-s" data-i18n="required"></p>
                         </div>
-                        <h4 data-i18n="coment"></h4>
-                        <div class="a-text-area">
-                            <label for="comment" data-i18n="comment_label"></label>
-                            <textarea id="comment" name="comment1"></textarea>
+                        <!-- Fourth question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="material_question"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="material_rating" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="material_rating" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="material_rating" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="material_rating" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="material_rating" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class="output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fifth question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="practice_question"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="practice_rating" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class="output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sixth question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="practice_question_2"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="practice_rating_2" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating_2" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating_2" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating_2" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="practice_rating_2" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class="output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Seventh question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="food_question"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="food_rating" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="food_rating" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="food_rating" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="food_rating" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="food_rating" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class="output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- eighth question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="location_question"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="school_rating" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="school_rating" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="school_rating" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="school_rating" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="school_rating" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class=" output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ninth question-->
+                        <div class="nps-question">
+                            <h5 data-i18n="inscription_question"></h5>
+                            <div class="rating_container -single">
+                                <div class="a-rating a-rating--large a-rating--selection">
+                                    <div class="a-rating__star-container">
+                                        <label>
+                                            <input type="radio" name="inscription_rating" value="1" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="inscription_rating" value="2" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="inscription_rating" value="3" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="inscription_rating" value="4" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="inscription_rating" value="5" />
+                                            <i class="a-icon ui-ic-nosafe-star" title="nosafe-star"></i>
+                                        </label>
+                                    </div>
+                                    <div class="a-rating__label-container">
+                                        <span class="output a-rating__label a-rating__label--complete">(0/5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Selection container-->
+                        <div class="np-question">
+                            <h5 data-i18n="media_question"></h5>
+                            <div class="radio-container">
+                                <div class="a-radio-button">
+                                    <input type="radio" id="radio-button-1" name="active" value="test1" />
+                                    <label for="radio-button-1" data-i18n="radio1"></label>
+                                </div>
+                                <div class="a-radio-button">
+                                    <input type="radio" id="radio-button-2" name="active" value="test2" />
+                                    <label for="radio-button-2" data-i18n="radio2"></label>
+                                </div>
+                                <div class="a-radio-button">
+                                    <input type="radio" id="radio-button-3" name="active" value="test3" />
+                                    <label for="radio-button-3" data-i18n="radio3"></label>
+                                </div>
+                                <div class="a-radio-button">
+                                    <input type="radio" id="radio-button-4" name="active" value="test4" />
+                                    <label for="radio-button-4" data-i18n="radio4"></label>
+                                </div>
+                                <div class="a-radio-button">
+                                    <input type="radio" id="radio-button-5" name="active" value="test5" />
+                                    <label for="radio-button-5" data-i18n="radio5"></label>
+                                </div>
+                                <div class="a-radio-button">
+                                    <input type="radio" id="radio-button-6" name="active" value="test6" />
+                                    <label for="radio-button-6" data-i18n="radio6"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="np-question-2">
+                            <h4 data-i18n="question1"></h4>
+                            <div class="a-text-area">
+                                <label for="question1" data-i18n="comment_label"></label>
+                                <textarea id="question1" name="question1"></textarea>
+                            </div>
+                        </div>
+                        <div class="np-question-2">
+                            <h4 data-i18n="question2"></h4>
+                            <div class="a-text-area">
+                                <label for="question2" data-i18n="comment_label"></label>
+                                <textarea id="question2" name="question2"></textarea>
+                            </div>
                         </div>
                         <button type="submit" name="submit" class="a-button a-button--primary -without-icon">
                             <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="survey_submit"></span>
@@ -467,16 +848,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const stars = document.querySelectorAll('[name="nps-rating"]');
-        const star_icons = document.querySelectorAll('[title="nosafe-star"]');
-        const rate_value = document.getElementById("output");
+        // Find each question container on the page
+        const questions = document.querySelectorAll('.nps-question');
 
-        // Star rating icon fill and management
-        if (stars && star_icons && rate_value) {
+        questions.forEach(function(question) {
+            // Within each question, select the related stars and output element.
+            const stars = question.querySelectorAll('input[type="radio"]');
+            const star_icons = question.querySelectorAll('i[title="nosafe-star"]');
+            // Use a class selector for the output span instead of an ID.
+            const rate_value = question.querySelector('.output');
+
+            // Function to remove the filled state from the stars
+            function removeFill() {
+                star_icons.forEach((icon) => {
+                    icon.classList.remove("ui-ic-nosafe-star-fill");
+                    icon.classList.add("ui-ic-nosafe-star");
+                });
+            }
+
+            // Attach event listeners for clicking a radio star.
             stars.forEach((star) => {
                 star.addEventListener("click", function() {
                     removeFill(); // Clear all previous fills
-                    const value = parseInt(star.getAttribute("value"));
+                    const value = parseInt(star.getAttribute("value"), 10);
 
                     // Fill the stars up to the selected one
                     for (let i = 0; i < value; i++) {
@@ -485,43 +879,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
 
                     // Display the selected rating
-                    rate_value.innerText = `(${value}/5)`;
+                    if (rate_value) {
+                        rate_value.innerText = `(${value}/5)`;
+                    }
                 });
             });
 
-            function removeFill() {
-                star_icons.forEach((icon) => {
-                    icon.classList.remove("ui-ic-nosafe-star-fill");
-                    icon.classList.add("ui-ic-nosafe-star");
-                });
-            }
-        }
+            // Additional behavior: Prevent default click interference and manually trigger the fill update.
+            const starLabels = question.querySelectorAll('.a-rating__star-container label');
+            starLabels.forEach((label) => {
+                label.addEventListener('click', function(e) {
+                    // Prevent default behavior if necessary
+                    e.preventDefault();
 
-        // Prevent interference and add custom behavior
-        document.querySelectorAll('.a-rating__star-container label').forEach((label) => {
-            label.addEventListener('click', (e) => {
-                // Prevent default click behavior
-                e.preventDefault();
+                    // Get the radio input in this label
+                    const radioInput = label.querySelector('input[type="radio"]');
+                    if (radioInput) {
+                        const value = parseInt(radioInput.value, 10);
+                        radioInput.checked = true; // Mark the radio as checked
 
-                // Add custom behavior
-                const radioInput = label.querySelector('input[type="radio"]');
-                if (radioInput) {
-                    const value = parseInt(radioInput.value);
-                    radioInput.checked = true; // Mark the radio button as checked
-
-                    // Trigger the same behavior as a normal click on the star
-                    removeFill();
-                    for (let i = 0; i < value; i++) {
-                        star_icons[i].classList.remove("ui-ic-nosafe-star");
-                        star_icons[i].classList.add("ui-ic-nosafe-star-fill");
+                        // Update the stars for this question
+                        removeFill();
+                        for (let i = 0; i < value; i++) {
+                            star_icons[i].classList.remove("ui-ic-nosafe-star");
+                            star_icons[i].classList.add("ui-ic-nosafe-star-fill");
+                        }
+                        if (rate_value) {
+                            rate_value.innerText = `(${value}/5)`;
+                        }
                     }
-
-                    // Update the output value
-                    rate_value.innerText = `(${value}/5)`;
-
-                }
+                });
             });
         });
+
+
 
         // Select the form
         const npsForm = document.getElementById("nps-form");
@@ -535,9 +926,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const cpf = document.getElementById("text-input-cp").value.trim();
             const email = document.getElementById("text-input-em").value.trim();
             const telephone = document.getElementById("text-input-tn").value.trim();
-            const rating = document.querySelector("input[name='nps-rating']:checked");
-            const nps = document.getElementById("slider").value.trim();
-            const comments = document.getElementById("comment").value.trim();
+            const npsRating = document.querySelector("input[name='nps_rating']:checked");
+            const trainer1 = document.querySelector("input[name='trainer_rating']:checked");
+            const trainer2 = document.querySelector("input[name='trainer_rating_2']:checked");
+            const material = document.querySelector("input[name='material_rating']:checked");
+            const practice = document.querySelector("input[name='practice_rating']:checked");
+            const practice2 = document.querySelector("input[name='practice_rating_2']:checked");
+            const food = document.querySelector("input[name='food_rating']:checked");
+            const school = document.querySelector("input[name='school_rating']:checked");
+            const inscription = document.querySelector("input[name='inscription_rating']:checked");
+            const media = document.querySelector("input[name='active']:checked")
+            const comments1 = document.getElementById("question1").value.trim();
+            const comments2 = document.getElementById("question2").value.trim();
             const agree = document.getElementById("checkbox-agree").checked; // Get checkbox state
 
             // Array to collect missing fields
@@ -548,8 +948,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!cpf) missingFields.push("CPF");
             if (!email) missingFields.push("Email");
             if (!telephone) missingFields.push("Telephone number");
-            if (!rating) missingFields.push("Rating");
-            if (nps === "" || nps === "0") missingFields.push("NPS score");
+            if (!npsRating) missingFields.push("NPS Rating");
+            if (!trainer1) missingFields.push("Trainer evaluation");
+            if (!trainer2) missingFields.push("Trainer 2 evaluation");
+            if (!material) missingFields.push("Training material");
+            if (!practice) missingFields.push("Practice evaluation");
+            if (!practice2) missingFields.push("Practice 2 evaluation");
+            if (!food) missingFields.push("Food evalueation");
+            if (!school) missingFields.push("Training center evaluation");
+            if (!inscription) missingFields.push("Inscription evaluation");
+            if (!media) missingFields.push("Media evaluation");
 
 
             // If there are missing fields, show an alert
@@ -564,12 +972,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 formData.append("cpf", cpf);
                 formData.append("email", email);
                 formData.append("telephone", telephone);
-                formData.append("rating", rating.value); // Get the value of the selected rating
-                formData.append("nps", nps);
-                formData.append("comments", comments);
+                formData.append("npsRating", npsRating.value); // Get the value of the selected rating
+                formData.append("trainer1", trainer1.value);
+                formData.append("trainer2", trainer2.value);
+                formData.append("material", material.value);
+                formData.append("practice", practice.value);
+                formData.append("practice2", practice2.value);
+                formData.append("food", food.value);
+                formData.append("school", school.value);
+                formData.append("inscription", inscription.value);
+                formData.append("media", media.value);
                 formData.append("agree", agree ? '1' : '0'); // Send the checkbox value (1 if checked, 0 if not)
+                formData.append("comments1", comments1);
+                formData.append("comments2", comments2);
+
 
                 // Submit the form data to the same page (nps.php)
+                /*
                 fetch("nps.php", {
                         method: "POST",
                         headers: {
@@ -600,7 +1019,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             alert("An unexpected error occurred. Please try again.");
                         }
 
-                    });
+                    });  */
+
+                    console.log("Collected form data:", Array.from(formData.entries()));  
             }
         });
 

@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
             // Handle special case for admin (code 9999)
             if ($training['training_id'] === 9999) {
                 $_SESSION['user_role'] = 'admin';
-                $_SESSION['accessible_cards'] = ['2', '3', '5', '7', '8', '9'];
+                $_SESSION['accessible_cards'] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
             } else {
                 // Handle standard student login
                 $_SESSION['user_role'] = 'student';
-                $_SESSION['accessible_cards'] = ['2', '3', '5'];
+                $_SESSION['accessible_cards'] = ['1', '2', '3', '4', '5', '6'];
             }
 
             $_SESSION['training_id'] = $training['training_id'];
@@ -105,14 +105,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         margin: 0;
     }
 
+    main {
+        height: calc(100vh - 161px);
+    }
+
     .main_container {
-        height: calc(100vh - 70px - 70px);
+        height: calc(100vh - 161px);
         /* Full height minus header (70px) and footer (70px) */
         display: flex;
         flex-direction: column;
         overflow-y: auto;
         /* Allow vertical scrolling */
-        padding-bottom: 20px;
     }
 
     #index_container {
@@ -221,6 +224,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         transition: transform 0.1s ease-in-out;
     }
 
+    .card:active {
+        transform: scale(0.95);
+        background-color: var(--bosch-blue-40);
+    }
+
     .card[disabled] {
         pointer-events: none;
         background: var(--bosch-gray-80);
@@ -252,6 +260,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
 
     .course_name {
         font-size: 2rem;
+    }
+
+    .widget-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 1rem 0;
+    }
+
+    .mc-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .microcard {
+        flex: 1;
+        max-width: 100px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+        padding: 0.5rem;
+        text-align: center;
+        background-color: var(--bosch-blue-50);
+    }
+
+    .microcard:hover {
+        background: var(--bosch-blue-40);
+    }
+
+    .mc-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .md-icon {
+        font-size: 2rem;
+        color: var(--bosch-white);
+        margin-top: 0.25rem;
+    }
+
+    .mc-label {
+        font-size: 0.8rem;
+        color: var(--bosch-white);
+        margin-top: 0.25rem;
+        line-height: 1.1;
+        max-height: 2.4rem;
+        overflow: hidden;
+        margin-top: 15px;
     }
 </style>
 
@@ -333,7 +397,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         <div class="o-header__navigation-container">
             <div class="e-container">
                 <nav class="o-header__navigation" aria-label="Main navigation">
-                    <ul class="o-header__navigation-first-level" role="menu">
+                    <ul class="o-header__navigation-first-level" role="menu" style="padding-bottom: 1rem;">
                         <li class="o-header__navigation-first-level-item" role="menuitem">
                             <button
                                 type="button"
@@ -352,24 +416,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
                                 aria-haspopup="true"
                                 aria-expanded="false"
                                 tabindex="0"
-                                id="survey_btn">
-                                <span class="a-button__label" data-i18n="pesquiza"></span>
-                            </button>
-                            <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__navigation-first-level-item" role="menuitem">
-                            <button
-                                type="button"
-                                class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                tabindex="0"
                                 id='logout_btn'>
                                 <span class="a-button__label">logout</span>
                             </button>
                             <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
                         </li>
-                        <li class="o-header__language-selector" role="menuitem">
+                        <li class="o-header__language-selector" role="menuitem" style="margin-top: 1rem;">
                             <div class="m-language-selector">
                                 <div class="a-link -icon">
                                     <a
@@ -392,15 +444,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
                         </li>
                     </ul>
                 </nav>
+                <hr>
             </div>
         </div>
     </header>
 
-    <main style="padding-top: 54px;">
-
+    <main>
+        <!------- LOGIN DIALOG ---------->
         <dialog
             class="m-dialog -floating-shadow-s -floating"
-            id="alert-dialog-info-without-close-button"
+            id="login-dialog"
             aria-labelledby="dialog-alert-dialog-info-without-close-button-title" style="max-width: 30rem !important;">
             <div class="m-dialog__remark --info"></div>
             <div class="m-dialog__header">
@@ -444,7 +497,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
                 </form>
             </div>
         </dialog>
-
+        <!----------END OF LOGIN DIALOG------------>
+        <!----------WIDGETS DIALOG----------------->
+        <dialog
+            class="m-dialog -floating-shadow-s -floating"
+            id="widget-dialog"
+            aria-labelledby="dialog-alert-dialog-info-without-close-button-title" style="max-width: 40rem !important;">
+            <div class="m-dialog__remark --info"></div>
+            <div class="m-dialog__header">
+                <i class="a-icon boschicon-bosch-ic-wrench"></i>
+                <div class="m-dialog__title" data-i18n="widget_title"></div>
+            </div>
+            <hr class="a-divider" />
+            <div class="m-dialog__content">
+                <div class="m-dialog__headline"
+                    id="dialog-alert-dialog-info-without-close-button-title" data-i18n="widget_subtitle">
+                </div>
+                <div class="widget-container">
+                    <section class="mc-container">
+                        <div class="microcard" id="mc1" role="button" onclick="openUnit()">
+                            <div class="mc-icon">
+                                <i class="md-icon boschicon-bosch-ic-calculate"></i>
+                            </div>
+                            <div class="mc-label">
+                                <span class="mc-label" data-i18n="widget1"></span>
+                            </div>
+                        </div>
+                        <div class="microcard" id="mc2" role="button" onclick="openDictionary()">
+                            <div class="mc-icon">
+                                <i class="md-icon boschicon-bosch-ic-book"></i>
+                            </div>
+                            <div class="mc-label">
+                                <span class="mc-label" data-i18n="widget2"></span>
+                            </div>
+                        </div>
+                        <div class="microcard" id="mc3" role="button" onclick="openAbreviation()">
+                            <div class="mc-icon">
+                                <i class="md-icon boschicon-bosch-ic-glossary"></i>
+                            </div>
+                            <div class="mc-label">
+                                <span class="mc-label" data-i18n="widget3"></span>
+                            </div>
+                        </div>
+                        <div class="microcard" id="mc4" role="button" onclick="openDiagram()">
+                            <div class="mc-icon">
+                                <i class="md-icon boschicon-bosch-ic-circuit-hydraulic"></i>
+                            </div>
+                            <div class="mc-label">
+                                <span class="mc-label" data-i18n="widget4"></span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="m-dialog__actions">
+                    <button
+                        type="button"
+                        class="a-button a-button--secondary -without-icon"
+                        id="widgetCancel">
+                        <span class="a-button__label" data-i18n="cancel_btn"></span>
+                    </button>
+                </div>
+            </div>
+        </dialog>
+        <!---------END OF WIDGET DIALOG----------->
         <div class="main_container">
             <div id="index_container" class="i_container">
                 <div class="main_title">
@@ -455,28 +570,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
                         </span></span><i class="b-icon arrow boschicon-bosch-ic-forward-right" title="Right"></i></p>
                 </div>
                 <section class="card_section">
-                    <div class="card" id="1" role="button" onclick="openUnit()"><i
-                            class="c-icon boschicon-bosch-ic-calculate" title="unitconverter"></i>
+                    <div class="card" id="1" role="button" onclick="openMaterial()"><i
+                            class="c-icon boschicon-bosch-ic-board-speaker" title="Course Material"></i>
                         <p class="card_text"><span data-i18n="menu1">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
-                    <div class="card" id="2" role="button" onclick="openDictionary()"><i class="c-icon boschicon-bosch-ic-book"
-                            title="nps"></i>
+                    <div class="card" id="2" role="button"><i class="c-icon boschicon-bosch-ic-wrench"
+                            title="app Widgets"></i>
                         <p class="card_text"><span data-i18n="menu2">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
-                    <div class="card" id="3" role="button" onclick="openMaterial()"><i
-                            class="c-icon boschicon-bosch-ic-board-speaker" title="CourseMaterial"></i>
+                    <div class="card" id="3" role="button" onclick="openNps()"><i
+                            class="c-icon boschicon-bosch-ic-wishlist" title="NPS survey"></i>
                         <p class="card_text"><span data-i18n="menu3">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
-                    <div class="card" id="4" role="button" onclick="openDiagram()"><i
-                            class="c-icon boschicon-bosch-ic-circuit-hydraulic"></i>
+                    <div class="card" id="4" role="button" onclick=""><i
+                            class="c-icon boschicon-bosch-ic-radiotower"></i>
                         <p class="card_text"><span data-i18n="menu4">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
-                    <div class="card" id="5" role="button" onclick="openAbreviation()"><i
-                            class="c-icon boschicon-bosch-ic-glossary"></i>
+                    <div class="card" id="5" role="button" onclick=""><i
+                            class="c-icon boschicon-bosch-ic-desktop-graph-search"></i>
                         <p class="card_text"><span data-i18n="menu5">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
@@ -486,7 +601,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
                 </section>
-
                 <section id="admin_card" class="card_section lower" style="margin-top: 20px;">
                     <div class="card" id="7" role="button" onclick="openDownloadNPS()"><i
                             class="c-icon boschicon-bosch-ic-download-frame" title="presenca"></i>
@@ -509,7 +623,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
             </div>
         </div>
     </main>
-
+    <!-------------FOOTER------------------------->
     <footer class="o-footer -minimal footer">
         <hr class="a-divider" />
         <div class="e-container">
@@ -546,13 +660,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
             </div>
         </div>
     </footer>
-
+    <!------------END OF FOOTER------------------>
 </body>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
-        const dialog = document.getElementById('alert-dialog-info-without-close-button');
+        const dialog = document.getElementById('login-dialog');
+        const widgetDialog = document.getElementById('widget-dialog');
         const form = document.getElementById("login_form");
         const errorMessage = document.querySelector(".m-dialog__code");
         const title = document.querySelector(".course_name");
@@ -560,10 +675,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         const lang_option = document.getElementById("demo");
 
         // Card IDs that must always be enabled
-        const alwaysEnabledCards = ['1', '4', '6'];
+        const alwaysEnabledCards = ['2', '6'];
 
         // Card IDs that must always be disabled initially
-        const alwaysDisabledCards = ['2', '3', '5', '7', '8', '9'];
+        const alwaysDisabledCards = ['1', '3', '4', '5', '6', '7', '8'];
 
         // Function to set the initial state of cards based on session data
         function setInitialCardState(accessibleCards, userRole) {
@@ -612,12 +727,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
             dialog.close();
         });
 
-        // handle nps click
-        document.getElementById('survey_btn').addEventListener('click', () => {
-            location.href = 'nps.php';
-        });
+        document.getElementById('2').addEventListener('click', () => {
+            widgetDialog.showModal();
+        })
 
+        document.getElementById('widgetCancel').addEventListener('click', () => {
+            widgetDialog.close();
+        })
 
+       
         function resetUIState() {
             // Clear cards and titles
             setInitialCardState([], null);
@@ -715,6 +833,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         location.href = "../../widgets/acron/abbreviations.php";
     }
 
+    function openNps() {
+        location.href = "nps.php";
+    }
 
     function openDiagram() {
         location.href = "../../widgets/diag/diagram.php";
@@ -766,6 +887,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
 
     // Function to change language
     async function changeLanguage(lang) {
+        document.querySelector('.o-header').classList.remove('-menu-open');
         await setLanguagePreference(lang.value);
         const langData = await fetchLanguageData(lang.value);
         updateContent(langData);

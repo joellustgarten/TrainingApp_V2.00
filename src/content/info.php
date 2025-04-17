@@ -176,60 +176,12 @@
                     </li>
                     -->
                 </ol>
-                <span class="o-header__subbrand">Training App - Menu</span>
+                <span class="o-header__subbrand">Training App - Information</span>
             </div>
         </div>
     </header>
 
     <main style="padding-top: 54px;">
-
-        <dialog
-            class="m-dialog -floating-shadow-s -floating"
-            id="alert-dialog-info-without-close-button"
-            aria-labelledby="dialog-alert-dialog-info-without-close-button-title" style="max-width: 30rem !important;">
-            <div class="m-dialog__remark --info"></div>
-            <div class="m-dialog__header">
-                <i class="a-icon ui-ic-alert-info"></i>
-                <div class="m-dialog__title" data-i18n="login_title"></div>
-            </div>
-            <hr class="a-divider" />
-            <div class="m-dialog__content">
-                <div
-                    class="m-dialog__headline"
-                    id="dialog-alert-dialog-info-without-close-button-title" data-i18n="login_subtitle">
-                </div>
-                <div
-                    class="m-dialog__body"
-                    id="dialog-alert-dialog-info-without-close-button-description" data-i18n="Login_inst">
-                </div>
-                <form id="login_form">
-                    <div class="a-text-field">
-                        <label for="text-input-code" data-i18n="codigo_curso"></label>
-                        <input
-                            type="text"
-                            id="text-input-code"
-                            name="input text with label"
-                            value="" />
-                    </div>
-                    <div class="m-dialog__code"></div>
-                    <div class="m-dialog__actions">
-                        <button
-                            type="submit"
-                            class="a-button a-button--primary -without-icon"
-                            id="loginConfirm">
-                            <span class="a-button__label" data-i18n="confirm_btn"></span>
-                        </button>
-                        <button
-                            type="button"
-                            class="a-button a-button--secondary -without-icon"
-                            id="loginCancel">
-                            <span class="a-button__label" data-i18n="cancel_btn"></span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </dialog>
-
         <div class="main_container">
             <div id="index_container" class="i_container">
                 <div class="main_title">
@@ -243,7 +195,6 @@
             </div>
         </div>
     </main>
-
     <footer class="o-footer -minimal footer">
         <hr class="a-divider" />
         <div class="e-container">

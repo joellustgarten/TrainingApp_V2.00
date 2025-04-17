@@ -1649,15 +1649,15 @@ document.addEventListener("DOMContentLoaded", function () {
                       o = parseInt(e.value, 10);
                     t.addEventListener("click", function () {
                       n.setRatingStars(o, !0), n.setRatingLabel(o);
-                    }),
-                      t.addEventListener("mouseover", function () {
+                    });
+                     /* t.addEventListener("mouseover", function () {
                         n.setRatingStars(o, !1);
-                      });
+                      }); */
                   }
                 }),
-                  e.addEventListener("mouseout", function () {
+                  /*e.addEventListener("mouseout", function () {
                     n.setRatingStars(a, !1);
-                  })),
+                  })),*/n).
                 n
               );
             }
