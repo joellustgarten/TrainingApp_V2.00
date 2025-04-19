@@ -72,5 +72,7 @@
   "acron_trans": "Translation",
   "acron_caption": "An acronym query may return multiple meanings, each tied to a specific manufacturer.",
   "abbrev_title": "Training App - Abbreviations",
-  "diag_title": "Training App - Diagrams"
+  "diag_title": "Training App - Diagrams",
+  "livecast_btn": "Broadcast",
+  "fullscreen":"Fullscreen"
 }

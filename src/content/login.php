@@ -585,12 +585,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
                         <p class="card_text"><span data-i18n="menu3">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
-                    <div class="card" id="4" role="button" onclick=""><i
+                    <div class="card" id="4" role="button" onclick="openLive()"><i
                             class="c-icon boschicon-bosch-ic-radiotower"></i>
                         <p class="card_text"><span data-i18n="menu4">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
                     </div>
-                    <div class="card" id="5" role="button" onclick=""><i
+                    <div class="card" id="5" role="button" onclick="openView()"><i
                             class="c-icon boschicon-bosch-ic-desktop-graph-search"></i>
                         <p class="card_text"><span data-i18n="menu5">
                             </span><i class="d-icon arrow boschicon-bosch-ic-forward-right"></i></p>
@@ -857,6 +857,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         location.href = "info.php";
     }
 
+    function openLive() {
+        location.href = "livecast.php"
+    }
+
+    function openView(){
+        location.href = 'viewstream.php'
+    }
     async function fetchLanguageData(lang) {
         const response = await fetch(`../../languages/${lang}.json`);
         return response.json();

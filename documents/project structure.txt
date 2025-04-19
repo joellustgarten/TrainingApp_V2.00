@@ -1,0 +1,41 @@
+
+TRAININGAPP_V2.00
+|--- documents\
+|--- languages\
+|	|---en.json
+|	|---es.json
+|	|---pt.json
+|--- material\
+|	|---Training_material.pdf´s
+|--- src\
+|	|--- content\
+|		|---config.php
+|		|---event.php
+|		|---export.php
+|		|---info.php
+|		|---login.php
+|		|---logout.php
+|		|---material.php
+|		|---nps.php
+|	|--- js\
+|		|---main.js
+|	|---style\
+|		|---style.css
+|			|---resources\
+|				|---favicon.oco
+|				|---fonts\
+|					|---bosch_icon.woff
+|					|---bosch_icon.woff2
+
+|	|---vendor\
+|		|---autoload.php
+|			|---conposer\
+|			|---maennchen\
+|			|---markbaker\
+|			|---phpoffice\
+|			|---psr\
+|	|---widgets\
+|	|---composer.json
+|	|---composer.lock
+|	|---index.php
+	

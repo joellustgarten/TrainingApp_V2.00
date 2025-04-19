@@ -72,5 +72,7 @@
   "acron_trans": "Traduccion",
   "acron_caption": "Una consulta de acrónimo puede devolver múltiples significados, cada uno vinculado a un fabricante específico.",
   "abbrev_title": "Training App - Abreviaciones",
-  "diag_title": "Training App - Diagramas"
+  "diag_title": "Training App - Diagramas",
+  "livecast_btn": "Transmitir",
+  "fullscreen":"Fullscreen"
 }
