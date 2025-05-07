@@ -3,7 +3,18 @@
 error_reporting(E_ALL); // Report all types of errors
 ini_set('display_errors', 1); // Display errors on the screen
 
-require('../../src/content/config.php'); // Include the database configuration file
+// Database connection
+$host = 'localhost';
+$db = 'trainingapp';
+$user = 'root';
+$password = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Error connecting to the database: " . $e->getMessage());
+}
 
 $number = 0;
 $rows = ''; // Initialize rows variable
