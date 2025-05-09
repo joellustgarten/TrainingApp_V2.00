@@ -10,10 +10,10 @@ $user = 'root';
 $password = '';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Error connecting to the database: " . $e->getMessage());
+	die("Error connecting to the database: " . $e->getMessage());
 }
 
 $number = 0;
@@ -85,12 +85,7 @@ try {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description"
 		content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-	<meta name="google-site-verification" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="robots" content="all">
-	<meta name="googlebot" content="noarchive">
-	<meta name="googlebot" content="notranslate">
-	<meta name="google" content="nopagereadaloud">
 	<meta http-equiv="imagetoolbar" content="no" />
 	<meta name="rating" content="general" />
 	<meta http-equiv="pragma" content="no-cache" />
@@ -301,30 +296,9 @@ try {
 								aria-expanded="false"
 								tabindex="0"
 								id="main_btn">
-								<span class="a-button__label">Main menu</span>
+								<span class="a-button__label" data-i18n="back_to_main_menu"></span>
 							</button>
 							<i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-						</li>
-						<li class="o-header__language-selector" role="menuitem">
-							<div class="m-language-selector">
-								<div class="a-link -icon">
-									<a
-										href="https://www.bosch.com/websites-worldwide/"
-										target="_blank">
-										<i class="a-icon boschicon-bosch-ic-globe"></i>
-										<span data-i18n="Idioma"></span>
-									</a>
-								</div>
-								<div class="a-dropdown">
-									<select
-										id="demo"
-										aria-label="dropdown for language" onload="changeLanguage('pt')" onchange="changeLanguage(this)">
-										<option value='pt'>Portuguese</option>
-										<option value='en'>English</option>
-										<option value='es'>Espanol</option>
-									</select>
-								</div>
-							</div>
 						</li>
 					</ul>
 				</nav>
@@ -365,28 +339,6 @@ try {
 		<hr class="a-divider" />
 		<div class="e-container">
 			<div class="o-footer__bottom">
-				<ul class="o-footer__links">
-					<li>
-						<div class="a-link a-link--integrated">
-							<a href="#" target="_self"><span>Imprint</span></a>
-						</div>
-					</li>
-					<li>
-						<div class="a-link a-link--integrated">
-							<a href="#" target="_self"><span>Legal information</span></a>
-						</div>
-					</li>
-					<li>
-						<div class="a-link a-link--integrated">
-							<a href="#" target="_self"><span>Data privacy</span></a>
-						</div>
-					</li>
-					<li>
-						<div class="a-link a-link--integrated">
-							<a href="#" target="_self"><span>Disclosure documents</span></a>
-						</div>
-					</li>
-				</ul>
 				<hr class="a-divider" />
 				<div class="o-footer__copyright">
 					<i
@@ -416,15 +368,6 @@ try {
 				const key = element.getAttribute("data-i18n");
 				element.textContent = langData[key];
 			});
-
-			var selLanguage = document.getElementById("demo");
-			if (localStorage.getItem("language") === "es") {
-				selLanguage.options[1].defaultSelected = true;
-			} else if (localStorage.getItem("language") === "en") {
-				selLanguage.options[2].defaultSelected = true;
-			} else {
-				selLanguage.options[0].defaultSelected = true;
-			}
 		}
 
 		// Function to change language
@@ -440,14 +383,14 @@ try {
 			const langData = await fetchLanguageData(userPreferredLanguage);
 			updateContent(langData);
 
-			
+
 		});
 
 		document.addEventListener('DOMContentLoaded', function() {
 			document.getElementById('main_btn').addEventListener('click', () => {
 				location.href = '../../src/content/login.php';
 			});
-	
+
 		});
 	</script>
 

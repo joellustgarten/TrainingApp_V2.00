@@ -140,17 +140,13 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
     <meta name="copyright" content="© Robert Bosch Ltda." />
-    <meta name="keywords" content="Bosch, Technical training, Techical training center, Mechanics">
+    <meta name="keywords" content="Bosch, Technical training, Technical training center, Mechanics">
     <link rel="icon" type="image/x-icon" href="../style/resources/favicon.ico" />
     <link rel="stylesheet" href="../style/style.css">
     <script defer="" src="../js/main.js"></script>
@@ -163,7 +159,7 @@ try {
     }
 
     .main_container {
-        height: calc(100vh - 70px - 70px);
+        height: calc(100vh - 160px);
         /* Full height minus header (70px) and footer (70px) */
         display: flex;
         flex-direction: column;
@@ -179,6 +175,18 @@ try {
         flex-direction: column;
         /* Ensure it stacks its children vertically */
         margin-bottom: 70px;
+    }
+
+    .i-container h3 {
+        margin-bottom: 10px;
+    }
+
+    .i_container h4 {
+        margin: 15px 0 15px 0;
+    }
+
+    .i_container h5 {
+        margin: 0 0 10px 0;
     }
 
     .footer {
@@ -209,6 +217,10 @@ try {
         margin-left: auto;
     }
 
+    .i_container h3 {
+        margin-top: 75px;
+    }
+
     @media (min-width: 768px) {
         .i_container {
             width: 750px;
@@ -236,18 +248,18 @@ try {
     }
 
     #event_btn {
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     .table_container {
-		flex-grow: 1;
-		/* Allow the table container to take up remaining space */
-		overflow-y: auto;
-		/* Enable vertical scrolling for the table */
-		margin-top: 20px;
-		max-height: 60vh;
-		/* Set a maximum height (e.g., 60% of the viewport height) */
-	}
+        flex-grow: 1;
+        /* Allow the table container to take up remaining space */
+        overflow-y: auto;
+        /* Enable vertical scrolling for the table */
+        margin-top: 20px;
+        max-height: 60vh;
+        /* Set a maximum height (e.g., 60% of the viewport height) */
+    }
 
     .m-table {
         width: 100%;
@@ -337,7 +349,7 @@ try {
                         </div>
                     </li>
                 </ol>
-                <span class="o-header__subbrand">Training App - Export</span>
+                <span class="o-header__subbrand">Training App - Export NPS</span>
             </div>
         </div>
         <div class="o-header__navigation-container">
@@ -350,55 +362,11 @@ try {
                                 class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
                                 aria-haspopup="true"
                                 aria-expanded="false"
-                                tabindex="0">
-                                <span class="a-button__label">Other trainings</span>
-                            </button>
-                            <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__navigation-first-level-item" role="menuitem">
-                            <button
-                                type="button"
-                                class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
-                                aria-haspopup="true"
-                                aria-expanded="false"
                                 tabindex="0"
                                 id="menu_btn">
                                 <span class="a-button__label">Main menu</span>
                             </button>
                             <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__navigation-first-level-item" role="menuitem">
-                            <button
-                                type="button"
-                                class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                tabindex="0"
-                                id='logout_btn'>
-                                <span class="a-button__label">logout</span>
-                            </button>
-                            <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__language-selector" role="menuitem">
-                            <div class="m-language-selector">
-                                <div class="a-link -icon">
-                                    <a
-                                        href="https://www.bosch.com/websites-worldwide/"
-                                        target="_blank">
-                                        <i class="a-icon boschicon-bosch-ic-globe"></i>
-                                        <span>Language</span>
-                                    </a>
-                                </div>
-                                <div class="a-dropdown">
-                                    <select
-                                        id="demo"
-                                        aria-label="here goes the aria label for the dropwdown">
-                                        <option value='Portuguese'>Portuguese</option>
-                                        <option value='English'>English</option>
-                                        <option value='Espanol'>Espanol</option>
-                                    </select>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                 </nav>
@@ -410,9 +378,9 @@ try {
         <div class="main_container">
             <div id="index_container" class="i_container">
                 <h3>Events & Trainings</h3>
-                <h4>Event updates</h4>
+                <h4>NPS Download</h4>
                 <form>
-                    <h5 style="margin-top: 0;">Select training and training dates</h5>
+                    <h5>Select training and training dates</h5>
                     <div class="m-form-field">
                         <div class="a-dropdown">
                             <label for="training3">Training event</label>
@@ -422,13 +390,13 @@ try {
                         </div>
                     </div>
                     <button type="button" class="a-button a-button--primary -without-icon" id="event_btn">
-                        <span class="a-button__label" style="padding-right: 0.75rem !important;">Display event</span>
+                        <span class="a-button__label" style="padding-right: 0.75rem !important;">Display surveys</span>
                     </button>
                 </form>
                 <div class="table_container"></div>
                 <div class="download_control">
                     <button type="button" class="a-button a-button--primary -without-icon" id="download_btn">
-                        <span class="a-button__label" style="padding-right: 0.75rem !important;">Dowload</span>
+                        <span class="a-button__label" style="padding-right: 0.75rem !important;">Download</span>
                     </button>
                 </div>
             </div>
@@ -440,28 +408,6 @@ try {
         <hr class="a-divider" />
         <div class="e-container">
             <div class="o-footer__bottom">
-                <ul class="o-footer__links">
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Imprint</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Legal information</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Data privacy</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Disclosure documents</span></a>
-                        </div>
-                    </li>
-                </ul>
                 <hr class="a-divider" />
                 <div class="o-footer__copyright">
                     <i
@@ -645,23 +591,6 @@ try {
             location.href = 'login.php';
         });
 
-        // Add event listener for logout action
-        const logoutButton = document.getElementById("logout_btn"); // Adjust ID as necessary
-        logoutButton.addEventListener("click", function() {
-            // Perform logout via fetch
-            fetch("logout.php")
-                .then((response) => {
-                    if (response.ok) {
-                        // Reset UI state
-                       location.href = 'login.php';
-                    } else {
-                        console.error("Logout failed");
-                    }
-                })
-                .catch((err) => {
-                    console.error("Error during logout:", err);
-                });
-        });
 
     });
 </script>

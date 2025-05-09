@@ -26,6 +26,7 @@
   "widget2": "Diccionario técnico",
   "widget3": "Abreviaciones técnicas",
   "widget4": "Diagramas eléctricos",
+  "back_to_main_menu": "Volver a menu principal",
   "NPS_title": "Training App - Encuesta NPS",
   "nps_inner_title": "Material de entrenamento",
   "th1": "ID de curso",
@@ -74,5 +75,15 @@
   "abbrev_title": "Training App - Abreviaciones",
   "diag_title": "Training App - Diagramas",
   "livecast_btn": "Transmitir",
-  "fullscreen":"Fullscreen"
+  "stop_broadcasting": "Detener transmision",
+  "fullscreen": "Fullscreen",
+  "terms_title": "Términos de uso y aviso legal",
+  "main_disclaimer": "La información contenida en este material está destinada únicamente a fines de capacitación y no debe utilizarse como instrucciones de servicio y reparación de vehículos.",
+  "disclaimer": "Aviso Legal:<br />La información en este material de capacitación se proporciona “tal cual”, sin ninguna garantía, expresa o implícita, incluidas, entre otras, la precisión, integridad, comerciabilidad o idoneidad para un propósito particular. Robert Bosch Ltda. no será responsable, en la máxima medida permitida por la ley, de ninguna discrepancia entre este material y la información oficial vigente. Los fabricantes y proveedores de servicios se reservan el derecho de modificar sus productos, información, documentos o el acceso a sus portales y datos en cualquier momento.",
+  "copyright": "© 2025 Robert Bosch Ltda. Todos los derechos reservados. Ninguna parte de esta publicación puede reproducirse, almacenarse en un sistema de recuperación o transmitirse de ninguna forma ni por ningún medio (electrónico, mecánico, fotocopia, grabación u otro) sin el previo permiso expreso y por escrito de Robert Bosch Ltda.",
+  "consent_disclaimer": "He leído y acepto el aviso legal.",
+  "consent_copyright": "Acepto los Términos de uso y el aviso de derechos de autor.",
+  "accept_agreement": "Al hacer clic en “Aceptar”, su aceptación de los Términos de Uso y Avisos Legales se guardará en su Configuración de Privacidad. Puede retirar este consentimiento en cualquier momento con efecto inmediato, lo que anulará su acceso a los materiales de formación para uso personal.",
+  "accept_button": "Aceptar",
+  "reject_button": "Rechazar"
 }

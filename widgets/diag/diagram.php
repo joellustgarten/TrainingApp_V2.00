@@ -11,12 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-  <meta name="google-site-verification" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="all">
-  <meta name="googlebot" content="noarchive">
-  <meta name="googlebot" content="notranslate">
-  <meta name="google" content="nopagereadaloud">
   <meta http-equiv="imagetoolbar" content="no" />
   <meta name="rating" content="general" />
   <meta http-equiv="pragma" content="no-cache" />
@@ -27,11 +22,10 @@
   <link rel="stylesheet" href="../../src/style/style.css">
   <script defer="" src="../../src/js/main.js"></script>
   <style>
-
-body {
-		overflow: hidden;
-		margin: 0;
-	}
+    body {
+      overflow: hidden;
+      margin: 0;
+    }
 
     /* Slideshow container */
     #slideshow-container {
@@ -50,7 +44,7 @@ body {
     }
 
 
-    @media(max-width:1080px){
+    @media(max-width:1080px) {
       #slideshow-container {
         height: calc(100vh - 260px);
       }
@@ -272,30 +266,9 @@ body {
                 aria-expanded="false"
                 tabindex="0"
                 id="main_btn">
-                <span class="a-button__label">Main menu</span>
+                <span class="a-button__label" data-i18n="back_to_main_menu"></span>
               </button>
               <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-            </li>
-            <li class="o-header__language-selector" role="menuitem">
-              <div class="m-language-selector">
-                <div class="a-link -icon">
-                  <a
-                    href="https://www.bosch.com/websites-worldwide/"
-                    target="_blank">
-                    <i class="a-icon boschicon-bosch-ic-globe"></i>
-                    <span>Language</span>
-                  </a>
-                </div>
-                <div class="a-dropdown">
-                  <select
-                    id="demo"
-                    aria-label="dropdown for language" onload="changeLanguage('pt')" onchange="changeLanguage(this)">
-                    <option value='pt'>Portuguese</option>
-                    <option value='en'>English</option>
-                    <option value='es'>Espanol</option>
-                  </select>
-                </div>
-              </div>
             </li>
           </ul>
         </nav>
@@ -351,33 +324,13 @@ body {
   </div>
   <footer class="o-footer -minimal footer">
     <hr class="a-divider" />
-    <div class="footer_container">
+    <div class="e-container">
       <div class="o-footer__bottom">
-        <ul class="o-footer__links">
-          <li>
-            <div class="a-link a-link--integrated">
-              <a href="#" target="_self"><span>Imprint</span></a>
-            </div>
-          </li>
-          <li>
-            <div class="a-link a-link--integrated">
-              <a href="#" target="_self"><span>Legal information</span></a>
-            </div>
-          </li>
-          <li>
-            <div class="a-link a-link--integrated">
-              <a href="#" target="_self"><span>Data privacy</span></a>
-            </div>
-          </li>
-          <li>
-            <div class="a-link a-link--integrated">
-              <a href="#" target="_self"><span>Disclosure documents</span></a>
-            </div>
-          </li>
-        </ul>
         <hr class="a-divider" />
         <div class="o-footer__copyright">
-          <i class="copy_icon boschicon-bosch-ic-copyright-frame" title="Lorem Ipsum"></i>
+          <i
+            class="a-icon boschicon-bosch-ic-copyright-frame"
+            title="Lorem Ipsum"></i>
           2021 Bosch.IO GmbH, all rights reserved
         </div>
       </div>

@@ -41,12 +41,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
@@ -457,7 +452,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                             <a href="/" target="_self">
                                 <span>Course</span>
                                 <span>
-                                    material
+                                    materials
                                     <i class="a-icon ui-ic-nosafe-lr-right-small"></i>
                                 </span>
                             </a>
@@ -490,30 +485,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                 aria-expanded="false"
                                 tabindex="0"
                                 id="menu_btn">
-                                <span class="a-button__label">Main menu</span>
+                                <span class="a-button__label" data-i18n="back_to_main_menu"></span>
                             </button>
                             <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__language-selector" role="menuitem">
-                            <div class="m-language-selector">
-                                <div class="a-link -icon">
-                                    <a
-                                        href="https://www.bosch.com/websites-worldwide/"
-                                        target="_blank">
-                                        <i class="a-icon boschicon-bosch-ic-globe"></i>
-                                        <span>Language</span>
-                                    </a>
-                                </div>
-                                <div class="a-dropdown">
-                                    <select
-                                        id="demo"
-                                        aria-label="dropdown for language" onload="changeLanguage('pt')" onchange="changeLanguage(this)">
-                                        <option value='pt'>Portuguese</option>
-                                        <option value='en'>English</option>
-                                        <option value='es'>Espanol</option>
-                                    </select>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                 </nav>
@@ -535,38 +509,19 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                     class="m-dialog__top-content"
                                     id="pwc-dialog-top-content"></div>
                                 <div class="m-dialog__headline" id="pwc-dialog-headline">
-                                    <span slot="headline">Terms of use & Disclaimer</span>
+                                    <span slot="headline" data-i18n="terms_title"></span>
                                 </div>
                                 <div class="m-dialog__body" id="pwc-dialog-body">
                                     <div slot="content">
                                         <div>
-                                            <p class="desc1">
-                                                The information contained within this material is
-                                                intended for training purposes only, and should not be
-                                                used as vehicle service and repair instructions.
-                                            </p>
-                                            <p class="desc2">
-                                                Disclaimer:<br />
-                                                Robert Bosch GmbH disclaims responsibility for any
-                                                differences between the information in this training
-                                                material and the currently valid information.
-                                                Manufacturers and service providers retain rights to
-                                                make changes in products, information, documents, and
-                                                access to their web portal/data.
-                                            </p>
-                                            <p class="desc3">
-                                                Copyright:<br />
-                                                No part of this training material may be reproduced or
-                                                used in any manner without the prior written permission
-                                                of the copyright owner. In case of copyright disclaimer
-                                                by section 17 U.S.C. § 107, user must have written
-                                                permission provided by copyright owner. Copyright ©
-                                                Robert Bosch GmbH, all rights reserved.
+                                            <p class="desc1" data-i18n="main_disclaimer"></p>
+                                            <p class="desc2" data-i18n="disclaimer"></p>
+                                            <p class="desc3" data-i18n="copyright">
                                             </p>
                                         </div>
                                         <div class="m-form-field">
                                             <div class="a-text-field">
-                                                <label for="text-input-tn">CPF/CPNJ</label>
+                                                <label for="text-input-tn">Email</label>
                                                 <input type="text" id="text-input-cpf" />
                                             </div>
                                         </div>
@@ -577,7 +532,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                         type="checkbox"
                                                         id="comfort"
                                                         style="display: block" />
-                                                    <label for="comfort">Consent to Legal Disclaimer</label>
+                                                    <label for="comfort" data-i18n="consent_disclaimer"></label>
                                                 </div>
                                             </bbg-checkbox>
                                         </div>
@@ -588,19 +543,14 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                         type="checkbox"
                                                         id="marketing"
                                                         style="display: block" />
-                                                    <label for="marketing">Consent to Use & copyright</label>
+                                                    <label for="marketing" data-i18n="consent_copyright"></label>
                                                 </div>
                                             </bbg-checkbox>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="m-dialog__code" id="pwc-dialog-code">
-                                    <span slot="code">When clicking ‘Accept’ your choice to accept the Terms of
-                                        use & disclaimers will be saved under your
-                                        <button class="small-print-link">privacy settings</button>,
-                                        you can withdraw at any time the consent that you granted
-                                        here with immediate effect, releasing the rights over the
-                                        training material for personal use.</span>
+                                    <span slot="code" data-i18n="accept-agreement"></span>
                                 </div>
                                 <div class="m-dialog__actions" id="pwc-dialog-actions">
                                     <span slot="actions" style="display: block">
@@ -609,7 +559,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                 <button
                                                     type="button"
                                                     class="a-button a-button--primary -without-icon">
-                                                    <div class="a-button__label">Accept</div>
+                                                    <div class="a-button__label" data-i18n="accept_button"></div>
                                                 </button>
                                             </bbg-button>
                                         </p>
@@ -620,7 +570,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                 <button
                                                     type="button"
                                                     class="a-button a-button--secondary -without-icon">
-                                                    <div class="a-button__label">Reject</div>
+                                                    <div class="a-button__label" data-i18n="reject_button"></div>
                                                 </button>
                                             </bbg-button>
                                         </p>
@@ -690,11 +640,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                     <li>
                         <div class="a-link a-link--integrated">
                             <a href="#" target="_self"><span>Data privacy</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Disclosure documents</span></a>
                         </div>
                     </li>
                 </ul>

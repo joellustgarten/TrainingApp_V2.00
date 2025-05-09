@@ -72,17 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
     <meta name="copyright" content="© Robert Bosch Ltda." />
-    <meta name="keywords" content="Bosch, Technical training, Techical training center, Mechanics">
+    <meta name="keywords" content="Bosch, Technical training, Technical training center, Mechanics">
     <link rel="icon" type="image/x-icon" href="../style/resources/favicon.ico" />
     <link rel="stylesheet" href="../style/style.css">
     <script defer="" src="../js/main.js"></script>
@@ -160,6 +155,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    .o-form {
+        margin: 1rem 0;
+    }
+
     .main_title {
         text-align: center;
     }
@@ -179,8 +178,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     /* TEST NEW NPS QUESTIONS */
+
+    .nps-question h5,
+    .nps-question-2 h5 {
+        font-size: 1.3rem;
+        font-weight: 500;
+    }
+
+    .nps-question-2,
     .nps-question {
         margin-bottom: 50px;
+    }
+
+    .comments h5 {
+        margin-bottom: 15px;
     }
 
     .nps-rating-container {
@@ -241,6 +252,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         gap: 5rem;
     }
 
+    .a-rating--large .a-rating__label {
+        --font-size: 1.3rem;
+        --line-height: 1.5;
+        font-size: 1.3rem;
+        line-height: 1.5;
+    }
+
     .radio-container {
         display: flex;
         flex-direction: column;
@@ -248,11 +266,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         max-width: 800px;
         margin-left: 50px
     }
-    
+
+    .button_container {
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .o-form button[type="submit"] {
+        margin: 1rem;
+    }
+
+    .a-button.-without-icon .a-button__label {
+        padding-right: 2rem;
+        padding-left: 2rem;
+    }
 </style>
 
 <body>
-
     <header class="o-header">
         <div class="o-header__top-container">
             <div class="e-container">
@@ -272,31 +305,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </svg>
                     </a>
                     <div class="o-header__quicklinks">
-                    </div>
-                    <div class="o-header__search">
-                        <form class="m-search-form" autocomplete="off" action='' method="POST">
-                            <div class="a-search-input">
-                                <input type="search" name='search' id="search-input-1" placeholder="Search" />
-                                <button type="button" class="a-search-input__icon-close">
-                                    <i class="a-icon ui-ic-close-small"></i>
-                                </button>
-                                <button
-                                    type="submit"
-                                    name="submit"
-                                    class="a-search-input__icon-search"
-                                    aria-label="Search">
-                                    <i class="a-icon ui-ic-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                        <button
-                            type="button"
-                            class="a-button a-button--integrated o-header__search-open"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="a-icon a-button__icon boschicon-bosch-ic-search"></i>
-                            <span class="a-button__label">Search</span>
-                        </button>
                     </div>
                     <button
                         type="button"
@@ -366,7 +374,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 aria-expanded="false"
                                 tabindex="0"
                                 id="menu_btn">
-                                <span class="a-button__label">Main menu</span>
+                                <span class="a-button__label" data-i18n="back_to_main_menu"></span>
                             </button>
                             <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
                         </li>
@@ -374,7 +382,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="m-language-selector">
                                 <div class="a-link -icon">
                                     <a
-                                        href="https://www.bosch.com/websites-worldwide/"
+                                        href="#"
                                         target="_blank">
                                         <i class="a-icon boschicon-bosch-ic-globe"></i>
                                         <span>Language</span>
@@ -755,7 +763,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <!-- Selection container-->
-                        <div class="np-question">
+                        <div class="nps-question">
                             <h5 data-i18n="media_question"></h5>
                             <div class="radio-container">
                                 <div class="a-radio-button">
@@ -784,23 +792,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
                         </div>
-                        <div class="np-question-2">
-                            <h4 data-i18n="question1"></h4>
+                        <div class="nps-question-2 comments">
+                            <h5 data-i18n="question1"></h5>
                             <div class="a-text-area">
                                 <label for="question1" data-i18n="comment_label"></label>
                                 <textarea id="question1" name="question1"></textarea>
                             </div>
                         </div>
-                        <div class="np-question-2">
-                            <h4 data-i18n="question2"></h4>
+                        <div class="nps-question-2 comments">
+                            <h5 data-i18n="question2"></h5>
                             <div class="a-text-area">
                                 <label for="question2" data-i18n="comment_label"></label>
                                 <textarea id="question2" name="question2"></textarea>
                             </div>
                         </div>
-                        <button type="submit" name="submit" class="a-button a-button--primary -without-icon">
-                            <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="survey_submit"></span>
-                        </button>
+                        <div class="button_container">
+                            <button type="submit" name="submit" class="a-button a-button--primary -without-icon">
+                                <span class="a-button__label" data-i18n="survey_submit"></span>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -811,28 +821,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <hr class="a-divider" />
         <div class="e-container">
             <div class="o-footer__bottom">
-                <ul class="o-footer__links">
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Imprint</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Legal information</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Data privacy</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Disclosure documents</span></a>
-                        </div>
-                    </li>
-                </ul>
                 <hr class="a-divider" />
                 <div class="o-footer__copyright">
                     <i
@@ -1021,7 +1009,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     });  */
 
-                    console.log("Collected form data:", Array.from(formData.entries()));  
+                console.log("Collected form data:", Array.from(formData.entries()));
             }
         });
 

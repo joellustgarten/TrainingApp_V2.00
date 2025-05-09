@@ -13,12 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
@@ -100,20 +95,30 @@
         }
     }
 
-    .menu_title {
+    .main_title {
         display: inline-block;
         width: 100%;
     }
 
-    .menu_title p {
-        margin-bottom: 30px;
+    .main_title h5 {
+        margin-bottom: 15px;
     }
 
-    .menu_title p {
-        font-size: 20px;
-        color: var(--bosch-gray-35);
+    .main_title h5 span {
+        font-size: 1rem;
+        color: var(--bosch-gray-30);
+        line-height: 1.3em;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .main_title p {
+        margin-bottom: 30px;
+        font-size: 1rem;
+        color: var(--bosch-gray-30);
         line-height: 1.3em;
         font-weight: 400;
+        text-align: justify;
     }
 
     .lower {
@@ -176,7 +181,7 @@
                     </li>
                     -->
                 </ol>
-                <span class="o-header__subbrand">Training App - Information</span>
+                <span class="o-header__subbrand">Training App - Avisos legais</span>
             </div>
         </div>
     </header>
@@ -185,12 +190,16 @@
         <div class="main_container">
             <div id="index_container" class="i_container">
                 <div class="main_title">
-                    <h2 class="main_title_header"><span>Training App V2.00</span></h2>
-                    <h4 class="main_title_header"><span>Management of training material access to students</span></h2>
-                </div>
-                <div class="menu_title">
-                    <p><span>&copy;&nbsp;Robert Bosch Ltda. MA-AS/TSS2</span><span>
-                            <p><span>Jan. 2025</span><span>
+                    <h2 class="main_title_header"><span>Avisos legais</span></h2>
+                    <h4 class="main_title_header"><span>Para os usuários da plataforma do coneudo do treinamento</span></h2>
+                        <h5><span>Dereitos de autor (&copy; Copyright)</h5>
+                        <p><span>Todos os direitos reservados. Os textos, imagens, som, animações e vídeos, assim como a sua disposição nos websites da Bosch estão protegidos por direitos de autor, direitos conexos e outros direitos de proteção comercial. O conteúdo destes websites não pode ser copiado, difundido, alterado ou tornado acessível a terceiros para finalidades comerciais. Alguns websites da Bosch também contêm imagens sujeitas a direitos de autor de terceiros.</span></p>
+                        <h5><span>Informação sobre marcas registadas</span></h5>
+                        <p><span>Salvo especificação em contrário, todas as marcas registadas nos websites da Bosch estão protegidas pelo direito das marcas. Isto aplica-se, em particular, às marcas da Bosch, nomeadamente, placas de identificação, logótipos da empresa e emblemas. As marcas e elementos de design utilizados nas páginas dos nossos sites são propriedade intelectual da Robert Bosch GmbH, Alemanha ou de empresas do Grupo Bosch.</span></p>
+                        <h5><span>Informações sobre garantia</span></h5>
+                        <p><span>Este website foi construído com o máximo cuidado. Não obstante, a exatidão, correção e completude da informação fornecida não pode ser garantida. A Bosch exclui por este meio qualquer responsabilidade por danos resultantes direta ou indiretamente da utilização deste website, exceto em caso de dolo ou negligência grosseira e parte da Bosch.</span></p>
+                        <h5><span>Informação sobre Licenças</span></h5>
+                        <p><span>A propriedade intelectual contida no website da Bosch, nomeadamente, patentes, marcas e direitos de autor e direitos conexos, está protegida. Este website não permite a utilização da propriedade intelectual das empresas do Grupo Bosch (Bosch) ou terceiros.</span></p>
                 </div>
             </div>
         </div>
@@ -199,6 +208,28 @@
         <hr class="a-divider" />
         <div class="e-container">
             <div class="o-footer__bottom">
+                <ul class="o-footer__links">
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Imprint</span></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Legal information</span></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Data privacy</span></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Disclosure documents</span></a>
+                        </div>
+                    </li>
+                </ul>
                 <hr class="a-divider" />
                 <div class="o-footer__copyright">
                     <i

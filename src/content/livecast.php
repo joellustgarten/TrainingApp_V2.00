@@ -10,17 +10,12 @@ $room = 'training123';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
     <meta name="copyright" content="© Robert Bosch Ltda." />
-    <meta name="keywords" content="Bosch, Technical training, Techical training center, Mechanics">
+    <meta name="keywords" content="Bosch, Technical training, Technical training center, Mechanics">
     <link rel="icon" type="image/x-icon" href="../style/resources/favicon.ico" />
     <link rel="stylesheet" href="../style/style.css">
     <script defer="" src="../js/main.js"></script>
@@ -28,6 +23,7 @@ $room = 'training123';
 
 </head>
 <style>
+    /* testing new layout
     body {
         overflow: hidden;
         margin: 0;
@@ -39,28 +35,21 @@ $room = 'training123';
 
     .main_container {
         height: calc(100vh - 161px);
-        /* Full height minus header (70px) and footer (70px) */
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        /* Allow vertical scrolling */
     }
 
     #index_container {
-        flex-grow: 1;
-        /* Allow it to grow and fill the available space */
+
         display: flex;
         flex-direction: column;
-        /* Ensure it stacks its children vertically */
-        margin-bottom: 50px;
-        aspect-ratio: 16/9;
-        width: 60vw;
+        width: 75vw;
         background-color: blue;
     }
 
     .footer {
         position: sticky;
-        /* Keeps it at the bottom */
         bottom: 0;
         background-color: var(--bosch-white);
         z-index: 10;
@@ -68,8 +57,7 @@ $room = 'training123';
 
     @media (min-width: 992px) {
         #index_container {
-            margin-left: auto;
-            margin-top: auto;
+            margin: auto
         }
     }
 
@@ -105,11 +93,7 @@ $room = 'training123';
     }
 
     .stream_btn {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: end;
-        align-items: center;
+        position: absolute;
     }
 
     .stream_btn button {
@@ -118,6 +102,118 @@ $room = 'training123';
 
     .stream_btn button:first-child {
         margin: 0 30px 20px 0;
+    }
+
+    */
+
+    body,
+    html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    main,
+    .main_container,
+    #index_container {
+        height: 100%;
+        min-height: 0;
+        min-width: 0;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 161px);
+        /* adjust if header/footer size changes */
+    }
+
+    .main_container {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    #index_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100%;
+        background: none;
+        /* remove blue for production */
+        padding: 0;
+        margin: 0;
+    }
+
+    #localVideo {
+        width: 100vw;
+        height: 100%;
+        max-width: 100vw;
+        max-height: 100%;
+        object-fit: contain;
+        /* or cover, depending on your preference */
+        background: #000;
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        #index_container {
+            width: 100vw;
+            padding: 0;
+        }
+
+        #localVideo {
+            width: 100vw;
+            height: 100vw;
+            max-height: 60vh;
+        }
+    }
+
+    @media (max-height: 600px) {
+
+        main,
+        .main_container,
+        #index_container {
+            height: 100vh;
+        }
+
+        #localVideo {
+            max-height: 60vh;
+        }
+    }
+
+    .stream_btn {
+        position: absolute;
+        bottom: 40px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+        z-index: 2;
+        padding: 10px;
+        opacity: 0.3;
+        transition: opacity 0.3s ease;
+        /* fade-in effect */
+    }
+
+    .footer {
+        position: sticky;
+        bottom: 0;
+        background-color: var(--bosch-white);
+        z-index: 10;
+    }
+
+    .btn_function_active {
+        background-color: var(--major-accent__disabled__fill__default);
+        color: var(--major-accent__disabled__front__default);
+    }
+
+    .a-button--primary:hover {
+        color: var(--major-accent__enabled__front__default);
     }
 </style>
 
@@ -141,14 +237,6 @@ $room = 'training123';
                         </svg>
                     </a>
                     <div class="o-header__quicklinks">
-                        <button type="button" class="a-button a-button--integrated" id='login_btn'>
-                            <i class="a-icon a-button__icon boschicon-bosch-ic-login"></i>
-                            <span class="a-button__label">Login</span>
-                        </button>
-                        <button type="button" class="a-button a-button--integrated">
-                            <i class="a-icon a-button__icon boschicon-bosch-ic-chat"></i>
-                            <span class="a-button__label" data-i18n="contato"></span>
-                        </button>
                     </div>
                     <button
                         type="button"
@@ -182,15 +270,26 @@ $room = 'training123';
                     <li>
                         <div class="a-link -icon">
                             <a href="/" target="_self">
+                                <span>Livestream </span>
                                 <span>
-                                    Livestream
+                                    <i class="a-icon ui-ic-nosafe-lr-right-small"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="a-link -icon">
+                            <a href="/" target="_self">
+                                <span></span>
+                                <span>
+
                                     <i class="a-icon ui-ic-nosafe-lr-right-small"></i>
                                 </span>
                             </a>
                         </div>
                     </li>
                 </ol>
-                <span class="o-header__subbrand">Training App - Menu</span>
+                <span class="o-header__subbrand">Training App - Livestream</span>
             </div>
         </div>
         <div class="o-header__navigation-container">
@@ -200,46 +299,14 @@ $room = 'training123';
                         <li class="o-header__navigation-first-level-item" role="menuitem">
                             <button
                                 type="button"
-                                class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                tabindex="0">
-                                <span class="a-button__label" data-i18n="otros_treinamentos"></span>
-                            </button>
-                            <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__navigation-first-level-item" role="menuitem">
-                            <button
-                                type="button"
-                                class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
+                                class="a-button a-button--integrated -without-icon full fullscreen-active o-header__navigation-trigger"
                                 aria-haspopup="true"
                                 aria-expanded="false"
                                 tabindex="0"
-                                id='logout_btn'>
-                                <span class="a-button__label">logout</span>
+                                id="menu_btn">
+                                <span class="a-button__label" data-i18n="back_to_main_menu"></span>
                             </button>
                             <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__language-selector" role="menuitem" style="margin-top: 1rem;">
-                            <div class="m-language-selector">
-                                <div class="a-link -icon">
-                                    <a
-                                        href="#"
-                                        target="_self">
-                                        <i class="a-icon boschicon-bosch-ic-globe"></i>
-                                        <span data-i18n="Idioma"></span>
-                                    </a>
-                                </div>
-                                <div class="a-dropdown">
-                                    <select
-                                        id="demo"
-                                        aria-label="dropdown for language" onload="changeLanguage('pt')" onchange="changeLanguage(this)">
-                                        <option value='pt'>Portuguese</option>
-                                        <option value='en'>English</option>
-                                        <option value='es'>Espa&ntilde;ol</option>
-                                    </select>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                 </nav>
@@ -247,20 +314,20 @@ $room = 'training123';
             </div>
         </div>
     </header>
-
     <main>
         <div class="main_container">
             <div id="index_container" class="i_container">
                 <video id="localVideo" autoplay muted style="width:100%"></video>
+                <div class="stream_btn">
+                    <button type="button" id="startBtn" name="livecast" class="a-button a-button--primary -without-icon">
+                        <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="livecast_btn"></span>
+                    </button>
+                    <button type="button" id="fullscreen_btn" name="fullscreen" class="a-button a-button--primary -without-icon">
+                        <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="fullscreen"></span>
+                    </button>
+                </div>
             </div>
-            <div class="stream_btn">
-                <button type="button" id="startBtn" name="livecast" class="a-button a-button--primary -without-icon">
-                    <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="livecast_btn"></span>
-                </button>
-                <button type="button" name="fullscreen" class="a-button a-button--primary -without-icon">
-                    <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="fullscreen"></span>
-                </button>
-            </div>
+
         </div>
     </main>
     <!-------------FOOTER------------------------->
@@ -268,28 +335,6 @@ $room = 'training123';
         <hr class="a-divider" />
         <div class="e-container">
             <div class="o-footer__bottom">
-                <ul class="o-footer__links">
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Imprint</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Legal information</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Data privacy</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Disclosure documents</span></a>
-                        </div>
-                    </li>
-                </ul>
                 <hr class="a-divider" />
                 <div class="o-footer__copyright">
                     <i
@@ -302,20 +347,27 @@ $room = 'training123';
     </footer>
     <!------------END OF FOOTER------------------>
 </body>
-<script>   window.SIGNALING = `http://${window.location.hostname}:3000`; window.ROOM      = <?= json_encode($room) ?>;</script>
+
+<script>
+    window.SIGNALING = `http://${window.location.hostname}:3000`;
+    window.ROOM = <?= json_encode($room) ?>;
+</script>
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="../js/livecast.js"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        document.getElementById('menu_btn').addEventListener('click', () => {
+            location.href = 'login.php';
+        });
+
+    });
+
     async function fetchLanguageData(lang) {
         const response = await fetch(`../../languages/${lang}.json`);
         return response.json();
     }
 
-    // Function to set the language preference
-    function setLanguagePreference(lang) {
-        localStorage.setItem("language", lang);
-        //location.reload();
-    }
 
     // Function to update content based on selected language
     function updateContent(langData) {
@@ -323,23 +375,6 @@ $room = 'training123';
             const key = element.getAttribute("data-i18n");
             element.textContent = langData[key];
         });
-
-        var selLanguage = document.getElementById("demo");
-        if (localStorage.getItem("language") === "es") {
-            selLanguage.options[1].defaultSelected = true;
-        } else if (localStorage.getItem("language") === "en") {
-            selLanguage.options[2].defaultSelected = true;
-        } else {
-            selLanguage.options[0].defaultSelected = true;
-        }
-    }
-
-    // Function to change language
-    async function changeLanguage(lang) {
-        document.querySelector('.o-header').classList.remove('-menu-open');
-        await setLanguagePreference(lang.value);
-        const langData = await fetchLanguageData(lang.value);
-        updateContent(langData);
     }
 
     // Call updateContent() on page load
@@ -347,6 +382,20 @@ $room = 'training123';
         const userPreferredLanguage = localStorage.getItem("language") || "pt";
         const langData = await fetchLanguageData(userPreferredLanguage);
         updateContent(langData);
+    });
+
+
+    document.getElementById('fullscreen_btn').addEventListener('click', function() {
+        const indexContainer = document.getElementById('index_container');
+        if (!document.fullscreenElement) {
+            indexContainer.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+            this.classList.add('btn_function_active'); // Add class when entering fullscreen
+        } else {
+            document.exitFullscreen();
+            this.classList.remove('btn_function_active'); // Remove class when exiting fullscreen
+        }
     });
 </script>
 

@@ -82,12 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
@@ -200,7 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
-        background: var(--bosch-white);
         justify-content: center;
         gap: 40px;
     }
@@ -631,22 +625,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
                 <ul class="o-footer__links">
                     <li>
                         <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Imprint</span></a>
+                            <a href="imprint.php" target="_self"><span>Imprint</span></a>
                         </div>
                     </li>
                     <li>
                         <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Legal information</span></a>
+                            <a href="avisos_legais.php" target="_self"><span>Legal information</span></a>
                         </div>
                     </li>
                     <li>
                         <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Data privacy</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Disclosure documents</span></a>
+                            <a href="privacidade.php" target="_self"><span>Data privacy</span></a>
                         </div>
                     </li>
                 </ul>
@@ -735,7 +724,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
             widgetDialog.close();
         })
 
-       
+
         function resetUIState() {
             // Clear cards and titles
             setInitialCardState([], null);
@@ -861,7 +850,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
         location.href = "livecast.php"
     }
 
-    function openView(){
+    function openView() {
         location.href = 'viewstream.php'
     }
     async function fetchLanguageData(lang) {

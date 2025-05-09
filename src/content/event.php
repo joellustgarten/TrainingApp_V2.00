@@ -97,17 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
     <meta name="copyright" content="© Robert Bosch Ltda." />
-    <meta name="keywords" content="Bosch, Technical training, Techical training center, Mechanics">
+    <meta name="keywords" content="Bosch, Technical training, Technical training center, Mechanics">
     <link rel="icon" type="image/x-icon" href="../style/resources/favicon.ico" />
     <link rel="stylesheet" href="../style/style.css">
     <script defer="" src="../js/main.js"></script>
@@ -164,6 +159,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         padding-left: 15px;
         margin-right: auto;
         margin-left: auto;
+    }
+
+    .i_container .subtitle_first {
+        margin-top: 10px;
+    }
+
+    .i_container h5 {
+        margin: 0 0 10px 0;
+    }
+
+    .i_container h3 {
+        margin-bottom: 10px;
     }
 
     @media (min-width: 768px) {
@@ -343,55 +350,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
                                 aria-haspopup="true"
                                 aria-expanded="false"
-                                tabindex="0">
-                                <span class="a-button__label">Other trainings</span>
-                            </button>
-                            <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__navigation-first-level-item" role="menuitem">
-                            <button
-                                type="button"
-                                class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
-                                aria-haspopup="true"
-                                aria-expanded="false"
                                 tabindex="0"
                                 id="menu_btn">
                                 <span class="a-button__label">Main menu</span>
                             </button>
                             <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__navigation-first-level-item" role="menuitem">
-                            <button
-                                type="button"
-                                class="a-button a-button--integrated -without-icon o-header__navigation-trigger"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                tabindex="0"
-                                id='logout_btn'>
-                                <span class="a-button__label">logout</span>
-                            </button>
-                            <i class="a-icon o-header__navigation-arrow ui-ic-right"></i>
-                        </li>
-                        <li class="o-header__language-selector" role="menuitem">
-                            <div class="m-language-selector">
-                                <div class="a-link -icon">
-                                    <a
-                                        href="https://www.bosch.com/websites-worldwide/"
-                                        target="_blank">
-                                        <i class="a-icon boschicon-bosch-ic-globe"></i>
-                                        <span>Language</span>
-                                    </a>
-                                </div>
-                                <div class="a-dropdown">
-                                    <select
-                                        id="demo"
-                                        aria-label="here goes the aria label for the dropwdown">
-                                        <option value='Portuguese'>Portuguese</option>
-                                        <option value='English'>English</option>
-                                        <option value='Espanol'>Espanol</option>
-                                    </select>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                 </nav>
@@ -402,9 +365,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="main_container">
             <div id="index_container" class="i_container">
                 <h3>Events & Trainings</h3>
-                <h4>Event updates</h4>
+                <h4 class="subtitle_first">Event updates</h4>
                 <form>
-                    <h5 style="margin-top: 0;">Select training and training dates</h5>
+                    <h5>Select training and training dates</h5>
                     <div class="o-form__row">
                         <div class="m-form-field -half">
                             <div class="a-dropdown">
@@ -439,7 +402,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
                 <h4>Training updates</h4>
                 <form>
-                    <h5 style="margin-top: 0;">Select training code and define training name</h5>
+                    <h5>Select training code and define training name</h5>
                     <div class="o-form__row">
                         <div class="m-form-field -quarter">
                             <div class="a-dropdown">
@@ -481,28 +444,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <hr class="a-divider" />
         <div class="e-container">
             <div class="o-footer__bottom">
-                <ul class="o-footer__links">
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Imprint</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Legal information</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Data privacy</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Disclosure documents</span></a>
-                        </div>
-                    </li>
-                </ul>
                 <hr class="a-divider" />
                 <div class="o-footer__copyright">
                     <i
@@ -626,25 +567,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.getElementById('menu_btn').addEventListener('click', () => {
             location.href = 'login.php';
         });
-
-        // Add event listener for logout action
-        const logoutButton = document.getElementById("logout_btn"); // Adjust ID as necessary
-        logoutButton.addEventListener("click", function() {
-            // Perform logout via fetch
-            fetch("logout.php")
-                .then((response) => {
-                    if (response.ok) {
-                        // Reset UI state
-                        location.href = 'login.php';
-                    } else {
-                        console.error("Logout failed");
-                    }
-                })
-                .catch((err) => {
-                    console.error("Error during logout:", err);
-                });
-        });
-
 
     });
 

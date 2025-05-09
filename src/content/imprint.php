@@ -13,12 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-    <meta name="google-site-verification" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="noarchive">
-    <meta name="googlebot" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="rating" content="general" />
     <meta http-equiv="pragma" content="no-cache" />
@@ -185,12 +180,16 @@
         <div class="main_container">
             <div id="index_container" class="i_container">
                 <div class="main_title">
-                    <h2 class="main_title_header"><span>Training App V2.00</span></h2>
-                    <h4 class="main_title_header"><span>Management of training material access to students</span></h2>
+                    <h2 class="main_title_header"><span>Centro de treinamento automotivo Bosch</span></h2>
+                    <h4 class="main_title_header"><span>Nome e endereço</span></h2>
+                        <p><span>Robert Bosch Limitada<br />
+                                Via Anhanguera, km 98<br />
+                                Vila Boa Vista<br />
+                                13.065-900 – Campinas – SP</span></p>
                 </div>
-                <div class="menu_title">
-                    <p><span>&copy;&nbsp;Robert Bosch Ltda. MA-AS/TSS2</span><span>
-                            <p><span>Jan. 2025</span><span>
+                <div class="main_title">
+                    <h4 class="main_title_header"><span>Contato</span></h2>
+                        <p><span>(19) 2103-1419</span></p>
                 </div>
             </div>
         </div>
@@ -199,6 +198,28 @@
         <hr class="a-divider" />
         <div class="e-container">
             <div class="o-footer__bottom">
+                <ul class="o-footer__links">
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Imprint</span></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Legal information</span></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Data privacy</span></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="a-link a-link--integrated">
+                            <a href="#" target="_self"><span>Disclosure documents</span></a>
+                        </div>
+                    </li>
+                </ul>
                 <hr class="a-divider" />
                 <div class="o-footer__copyright">
                     <i
