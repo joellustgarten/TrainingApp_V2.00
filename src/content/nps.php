@@ -359,7 +359,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </li>
                 </ol>
-                <span class="o-header__subbrand">Training App - NPS Survey</span>
+                <span class="o-header__subbrand" data-i18n="NPS_title"></span>
             </div>
         </div>
         <div class="o-header__navigation-container">

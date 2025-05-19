@@ -211,22 +211,17 @@
                 <ul class="o-footer__links">
                     <li>
                         <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Imprint</span></a>
+                            <a href="imprint.php" target="_self"><span>Imprint</span></a>
                         </div>
                     </li>
                     <li>
                         <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Legal information</span></a>
+                            <a href="avisos_legais.php" target="_self"><span>Legal information</span></a>
                         </div>
                     </li>
                     <li>
                         <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Data privacy</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="a-link a-link--integrated">
-                            <a href="#" target="_self"><span>Disclosure documents</span></a>
+                            <a href="privacidade.php" target="_self"><span>Data privacy</span></a>
                         </div>
                     </li>
                 </ul>

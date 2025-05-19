@@ -2,6 +2,7 @@
 
 error_reporting(E_ALL); // Report all types of errors
 ini_set('display_errors', 1); // Display errors on the screen
+ini_set('error_log', dirname(__DIR__) . '/logs/error.log'); // Set log file path
 
 // Database connection
 $host = 'localhost';
@@ -20,11 +21,11 @@ $number = 0;
 $rows = ''; // Initialize rows variable
 
 try {
-	// Check if there is a session variable
-	if (isset($_SESSION['selected_meaning'])) {
-		$term = $_SESSION['selected_meaning'];
+	// Check if there is a term in the URL
+	if (isset($_GET['term'])) {
+		$term = urldecode($_GET['term']);
 
-		// Query database with the session term
+		// Query database with the term
 		$searchTerm = "SELECT * FROM technical_dictionary 
                        WHERE PORTUGUESE LIKE :term 
                           OR INGLES LIKE :term 
@@ -33,9 +34,6 @@ try {
 		$stmt = $pdo->prepare($searchTerm);
 		$stmt->execute([':term' => "%$term%"]);
 		$number = $stmt->rowCount();
-
-		// Reset the session variable after use
-		unset($_SESSION['selected_meaning']);
 	} elseif (isset($_POST['submit'])) {
 		// Handle search form submission
 		$term = $_POST['search'];
@@ -50,7 +48,7 @@ try {
 		$stmt->execute([':term' => "%$term%"]);
 		$number = $stmt->rowCount();
 	} else {
-		// If no session variable or search, do nothing or load empty
+		// If no term or search, do nothing or load empty
 		$rows .= '<tr><td colspan="4">Please enter a term to search.</td></tr>';
 		$stmt = null;
 	}

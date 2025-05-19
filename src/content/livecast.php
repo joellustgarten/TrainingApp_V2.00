@@ -20,7 +20,6 @@ $room = 'training123';
     <link rel="stylesheet" href="../style/style.css">
     <script defer="" src="../js/main.js"></script>
     <title>CTA | Training App</title>
-
 </head>
 <style>
     /* testing new layout
@@ -185,6 +184,25 @@ $room = 'training123';
         #localVideo {
             max-height: 60vh;
         }
+    }
+
+    @media (min-width: 1800px) {
+
+        .o-header__top-container .e-container,
+        *>e-container {
+            max-width: 90vw;
+        }
+
+        .o-header__top,
+        .e-container,
+        .o-header__meta {
+            max-width: 90vw;
+        }
+
+        .o-footer .e-container>* {
+            max-width: 90vw;
+        }
+
     }
 
     .stream_btn {

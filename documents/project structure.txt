@@ -39,3 +39,73 @@ TRAININGAPP_V2.00
 |	|---composer.lock
 |	|---index.php
 	
+
+    require_once('config.php'); // Include the database connection and session handling
+
+// Initialize variables for the session data
+$userRole = '';
+$trainingId = '';
+$trainingName = '';
+$accessibleCards = [];
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_code'])) {
+$course_code = trim($_POST['course_code']);
+
+try {
+// Query to check active events for the training code
+$stmt = $pdo->prepare("
+SELECT t.training_id, t.training_name, e.start_date, e.end_date
+FROM training t
+LEFT JOIN event e ON t.training_id = e.training_id
+WHERE t.training_id = ? AND CURDATE() BETWEEN e.start_date AND e.end_date
+");
+$stmt->execute([$course_code]);
+$training = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($training && isset($training['training_id'])) {
+
+// Handle special case for admin (code 9999)
+if ($training['training_id'] === 9999) {
+$_SESSION['user_role'] = 'admin';
+$_SESSION['accessible_cards'] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+} else {
+// Handle standard student login
+$_SESSION['user_role'] = 'student';
+$_SESSION['accessible_cards'] = ['1', '2', '3', '4', '5', '6'];
+}
+
+$_SESSION['training_id'] = $training['training_id'];
+$_SESSION['training_name'] = $training['training_name']; // TRAININGAPP MANAGEMENT
+
+// Set variables to be used in JavaScript
+$userRole = $_SESSION['user_role'];
+$trainingId = $_SESSION['training_id'];
+$trainingName = $_SESSION['training_name'];
+$accessibleCards = $_SESSION['accessible_cards'];
+
+// Send successful response
+echo json_encode([
+'status' => 'success',
+'role' => $userRole,
+'training_id' => $trainingId,
+'training_name' => $trainingName,
+'accessible_cards' => $accessibleCards
+]);
+exit;
+} else {
+// No active event or invalid training code
+echo json_encode([
+'status' => 'error',
+'message' => 'Invalid course code or no active event available.',
+]);
+}
+} catch (PDOException $e) {
+// Handle database error
+echo json_encode([
+'status' => 'error',
+'message' => 'Database error: ' . $e->getMessage()
+]);
+}
+exit();
+}

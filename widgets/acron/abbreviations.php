@@ -2,6 +2,7 @@
 
 error_reporting(E_ALL); // Report all types of errors
 ini_set('display_errors', 1); // Display errors on the screen
+ini_set('error_log', dirname(__DIR__) . '/logs/error.log'); // Set log file path
 
 // Database connection
 $host = 'localhost';
@@ -60,10 +61,10 @@ if (isset($_POST['submit'])) {
 }
 
 
-// Handle form submission for setting the session variable and redirecting
+// Handle form submission for setting the translation and redirecting
 if (isset($_POST['set_translation']) && !empty($_POST['selected_meaning'])) {
-    $_SESSION['selected_meaning'] = $_POST['selected_meaning'];
-    header('Location: ../dic/technicalDictionary.php'); // Redirect to the input page
+    $encodedMeaning = urlencode($_POST['selected_meaning']);
+    header('Location: ../dic/technicalDictionary.php?term=' . $encodedMeaning);
     exit();
 }
 
@@ -364,14 +365,6 @@ if (isset($_POST['set_translation']) && !empty($_POST['selected_meaning'])) {
                 element.textContent = langData[key];
             });
 
-            var selLanguage = document.getElementById("demo");
-            if (localStorage.getItem("language") === "es") {
-                selLanguage.options[1].defaultSelected = true;
-            } else if (localStorage.getItem("language") === "en") {
-                selLanguage.options[2].defaultSelected = true;
-            } else {
-                selLanguage.options[0].defaultSelected = true;
-            }
         }
 
         // Function to change language

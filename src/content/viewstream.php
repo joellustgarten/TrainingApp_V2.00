@@ -4,62 +4,101 @@ $room = 'training123';  // same room as teacher
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description"
-    content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="imagetoolbar" content="no" />
-<meta name="rating" content="general" />
-<meta http-equiv="pragma" content="no-cache" />
-<meta name="copyright" content="© Robert Bosch Ltda." />
-<meta name="keywords" content="Bosch, Technical training, Technical training center, Mechanics">
-<link rel="icon" type="image/x-icon" href="../style/resources/favicon.ico" />
-<link rel="stylesheet" href="../style/style.css">
-<title>CTA | Training App</title>
 
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Author: Joel Lustgarten, Organization: Technical training center, Area: MA-AA/TSS2-LA, Company: Robert Bosch Ltda., Country: Brazil, Content: Technical training material">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta name="rating" content="general" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="copyright" content="© Robert Bosch Ltda." />
+    <meta name="keywords" content="Bosch, Technical training, Technical training center, Mechanics">
+    <link rel="icon" type="image/x-icon" href="../style/resources/favicon.ico" />
+    <link rel="stylesheet" href="../style/style.css">
+    <title>CTA | Training App</title>
 </head>
 <style>
-    .container {
-        display: grid;
-        place-items: center;
-        /* centers both axes */
-        height: 100vh;
+    body,
+    html {
         margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
         background: black;
     }
 
-    .video-container {
+    .container {
         width: 100vw;
-        max-width: 1150px;
-        aspect-ratio: 16/9;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: relative;
+    }
+
+    .video-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .video-container video {
         width: 100%;
         height: 100%;
         object-fit: contain;
+        background: black;
     }
 
-    /* the “button” text overlay */
-    #exitBtn {
+    .stream_btn {
         position: absolute;
-        bottom: 16px;
-        right: 16px;
-        font-size: 16px;
-        color: rgba(255, 255, 255, 0.8);
+        bottom: 40px;
+        right: 20px;
+        z-index: 2;
         opacity: 0;
-        pointer-events: none;
         transition: opacity 0.3s ease;
-        user-select: none;
     }
 
-    #exitBtn.visible {
+    .stream_btn.visible {
         opacity: 1;
-        pointer-events: auto;
+    }
+
+    .tap-message {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        text-align: center;
+        padding: 8px 16px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .tap-message.visible {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .video-container video {
+            object-fit: contain;
+        }
+    }
+
+    @media (max-height: 600px) {
+        .video-container video {
+            object-fit: contain;
+        }
     }
 </style>
 
@@ -70,9 +109,10 @@ $room = 'training123';  // same room as teacher
             <video id="remoteVideo" autoplay style="width:100%"></video>
             <div class="stream_btn">
                 <button type="button" id="exitBtn" name="livecast" class="a-button a-button--primary -without-icon">
-                    <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="viewStream_exit_btn"></span>
+                    <span class="a-button__label" style="padding-right: 0.85rem;" data-i18n="back_to_main_menu"></span>
                 </button>
             </div>
+            <div class="tap-message" data-i18n="tap_to_show_controls"></div>
         </div>
     </div>
 </body>
@@ -91,7 +131,6 @@ $room = 'training123';  // same room as teacher
     // Function to set the language preference
     function setLanguagePreference(lang) {
         localStorage.setItem("language", lang);
-        //location.reload();
     }
 
     // Function to update content based on selected language
@@ -109,31 +148,64 @@ $room = 'training123';  // same room as teacher
         updateContent(langData);
     });
 
-
     document.addEventListener('DOMContentLoaded', () => {
         const container = document.querySelector('.video-container');
-        const exitBtn = document.getElementById('exitBtn');
+        const exitBtn = document.querySelector('.stream_btn');
+        const tapMessage = document.querySelector('.tap-message');
         let hideTimer;
+        let touchStartTime;
+        let touchStartX;
+        let touchStartY;
 
-        function showExit() {
+        function showControls() {
             clearTimeout(hideTimer);
             exitBtn.classList.add('visible');
+            tapMessage.classList.remove('visible');
             hideTimer = setTimeout(() => {
                 exitBtn.classList.remove('visible');
+                tapMessage.classList.add('visible');
             }, 5000);
         }
 
-        // on any touch or pointer movement over the video area:
-        container.addEventListener('touchstart', showExit);
-        container.addEventListener('pointermove', showExit);
+        // Show tap message initially
+        tapMessage.classList.add('visible');
+
+        // Handle touch start
+        container.addEventListener('touchstart', (e) => {
+            touchStartTime = Date.now();
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            showControls();
+        });
+
+        // Handle touch end to detect taps
+        container.addEventListener('touchend', (e) => {
+            const touchEndTime = Date.now();
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+
+            // Calculate touch duration and distance
+            const touchDuration = touchEndTime - touchStartTime;
+            const touchDistance = Math.sqrt(
+                Math.pow(touchEndX - touchStartX, 2) +
+                Math.pow(touchEndY - touchStartY, 2)
+            );
+
+            // If it's a short touch (less than 300ms) and minimal movement (less than 10px)
+            if (touchDuration < 300 && touchDistance < 10) {
+                showControls();
+            }
+        });
+
+        // Handle mouse movement for non-touch devices
+        container.addEventListener('mousemove', showControls);
 
         // exit button tap
-        exitBtn.addEventListener('click', () => {
-            // navigate back to your main menu page
+        document.getElementById('exitBtn').addEventListener('click', () => {
             window.location.href = 'login.php';
         });
 
-        // Optionally, you can trigger fullscreen on first tap if needed:
+        // Handle fullscreen on first tap
         let firstTouch = true;
         container.addEventListener('touchstart', function initFS() {
             if (firstTouch && container.requestFullscreen) {
@@ -142,7 +214,6 @@ $room = 'training123';  // same room as teacher
                 });
                 firstTouch = false;
             }
-            // remove this listener so it only fires once
             container.removeEventListener('touchstart', initFS);
         });
     });

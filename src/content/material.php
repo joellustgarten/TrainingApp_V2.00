@@ -139,258 +139,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         border-collapse: collapse;
         margin-top: 20px;
     }
-
-    /* DIALOG STYLING */
-
-    .m-dialog__actions span {
-        margin-top: 1.5rem;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        -ms-flex-pack: end;
-        justify-content: flex-end;
-        gap: 1rem;
-        width: 100%;
-    }
-
-    .a-button--primary {
-        background-color: var(--dock-primary-button-color,
-                var(--bosch-blue-50)) !important;
-        color: var(--dock-primary-button-text-color, white) !important;
-        border-color: var(--dock-primary-button-border-color, none) !important;
-        border-radius: var(--dock-primary-button-border-radius, none) !important;
-    }
-
-    .a-button--primary:hover {
-        background-color: var(--dock-primary-button-hover-color,
-                var(--bosch-blue-40)) !important;
-        color: var(--dock-primary-button-text-hover-color, white) !important;
-        border-color: var(--dock-primary-button-border-hover-color,
-                none) !important;
-    }
-
-    .a-button--secondary {
-        background-color: var(--dock-secondary-button-color, none) !important;
-        color: var(--dock-secondary-button-text-color,
-                var(--bosch-blue-50)) !important;
-        border-color: var(--dock-secondary-button-border-color,
-                var(--bosch-blue-50)) !important;
-        border-radius: var(--dock-secondary-button-border-radius,
-                none) !important;
-    }
-
-    .a-button--secondary:hover {
-        background-color: var(--dock-secondary-button-hover-color,
-                var(--bosch-blue-90)) !important;
-        color: var(--dock-secondary-button-text-hover-color,
-                var(--bosch-blue-40)) !important;
-        border-color: var(--dock-secondary-button-border-hover-color,
-                var(--bosch-blue-40)) !important;
-    }
-
-    .a-button--tertiary {
-        background-color: var(--dock-tertiary-button-color, none) !important;
-        color: var(--dock-tertiary-button-text-color,
-                var(--bosch-blue-50)) !important;
-        border-color: var(--dock-tertiary-button-border-color, none) !important;
-        border-radius: var(--dock-tertiary-button-border-radius, none) !important;
-    }
-
-    .a-button--tertiary:hover {
-        background-color: var(--dock-tertiary-button-hover-color,
-                var(--bosch-blue-90)) !important;
-        color: var(--dock-tertiary-button-text-hover-color,
-                var(--bosch-blue-40)) !important;
-        border-color: var(--dock-secondary-button-border-hover-color,
-                none) !important;
-    }
-
-    .a-link--simple a,
-    .a-link--primary a {
-        display: -ms-flexbox;
-        display: flex;
-    }
-
-    .a-link {
-        text-decoration: none;
-        color: var(--minor-accent__enabled__front__default);
-    }
-
-    .small-print-link {
-        background: none;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        text-decoration: underline;
-        color: var(--dock-small-print-link-color,
-                var(--bosch-blue-50)) !important;
-    }
-
-    .small-print-link:hover {
-        color: var(--dock-small-print-link-hover-color,
-                var(--bosch-blue-40)) !important;
-    }
-
-    .a-checkbox input[type="checkbox"]:checked+label::after {
-        background-color: var(--dock-checkbox-color,
-                var(--bosch-blue-50)) !important;
-    }
-
-    .a-checkbox input[type="checkbox"]:checked:hover+label::after {
-        background-color: var(--dock-checkbox-hover-color,
-                var(--bosch-blue-40)) !important;
-    }
-
-    .a-link {
-        color: var(--dock-link-color, var(--bosch-blue-50)) !important;
-    }
-
-    .a-link--simple a,
-    .a-link--simple a:visited,
-    .a-link--primary a,
-    .a-link--primary a:visited {
-        text-decoration: none !important;
-    }
-
-    .a-link:hover {
-        color: var(--dock-link-hover-color, var(--bosch-blue-40)) !important;
-    }
-
-    .a-link--primary a::after {
-        content: "";
-        border-top: 0.0625rem solid currentColor;
-        border-right: 0.0625rem solid currentColor;
-        position: relative;
-        width: 0.5em;
-        height: 0.5em;
-        margin-left: 0.25em;
-        -webkit-transform: translateY(0.465em) rotate(45deg);
-        transform: translateY(0.465em) rotate(45deg);
-    }
-
-    .a-box {
-        max-width: 52rem;
-        max-height: 92vh;
-        overflow-y: scroll;
-    }
-
-    .second-p {
-        margin-top: 2rem;
-    }
-
-    .checkboxes {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .a-checkbox label {
-        font-size: 0.9rem;
-        --font-size: 0.9rem;
-    }
-
-    .a-checkbox label::before {
-        height: 1rem;
-        width: 1rem;
-    }
-
-    input[type="checkbox"]:focus-visible+label::before {
-        outline: auto;
-        outline-offset: 3px;
-    }
-
-    bbg-button>button {
-        width: 100%;
-        margin-left: 0 !important;
-    }
-
-    .small-print-link {
-        background: none;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        font-size: var(--pwc-font-size);
-        color: var(--bosch-blue-50);
-    }
-
-    .m-form-field {
-        margin-top: 2rem;
-    }
-
-    .read-more {
-        margin-top: 0.75rem;
-        margin-left: 32.5px;
-    }
-
-    .smallprint-links {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -ms-flex-direction: row;
-        flex-direction: row;
-    }
-
-    .smallprint-links span:nth-child(2) {
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-        padding-left: 1rem;
-    }
-
-    .smallprint-links span:last-child:after {
-        content: "";
-        margin: 0;
-        padding-top: 0.1rem;
-    }
-
-    .desc1,
-    .desc2,
-    .desc3 {
-        font-style: italic;
-        font-size: 0.9rem;
-        --font-size: 0.9rem;
-        text-align: justify;
-        margin-block-start: 2em;
-        margin-block-end: 2em;
-    }
-
-    .m-dialog__headline {
-        font-size: 1.2rem;
-        --font-size: 1.2rem;
-    }
-
-    .m-dialog__code {
-        --font-size: 0.75rem;
-        font-size: 0.75rem;
-    }
-
-    @media (max-width: 48rem) {
-        .smallprint-links {
-            -ms-flex-direction: column;
-            flex-direction: column;
-            -ms-flex-align: center;
-            align-items: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-        }
-
-        .smallprint-links span {
-            padding: 0.75rem 0;
-            -ms-flex-pack: center !important;
-            justify-content: center !important;
-        }
-
-        .smallprint-links span:nth-child(2) {
-            padding-left: 0rem;
-            margin-top: 0;
-        }
-
-        .smallprint-links span:after {
-            display: none;
-        }
-    }
-
-    /* END OF DIALOG STYLING */
 </style>
 
 <body>
@@ -470,7 +218,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                         </div>
                     </li>
                 </ol>
-                <span class="o-header__subbrand" data-i18n="NPS_title"></span>
+                <span class="o-header__subbrand" data-i18n="material_title"></span>
             </div>
         </div>
         <div class="o-header__navigation-container">
@@ -498,113 +246,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     <main>
 
         <div class="main_container">
-
-            <!---- TERMS OF USE & DISCLAIMER ----->
-            <dialog class="m-dialog" role="dialog" id="dialog">
-                <bbg-box class="hydrated">
-                    <div class="a-box--modal">
-                        <div class="a-box -floating">
-                            <div class="m-dialog__content">
-                                <div
-                                    class="m-dialog__top-content"
-                                    id="pwc-dialog-top-content"></div>
-                                <div class="m-dialog__headline" id="pwc-dialog-headline">
-                                    <span slot="headline" data-i18n="terms_title"></span>
-                                </div>
-                                <div class="m-dialog__body" id="pwc-dialog-body">
-                                    <div slot="content">
-                                        <div>
-                                            <p class="desc1" data-i18n="main_disclaimer"></p>
-                                            <p class="desc2" data-i18n="disclaimer"></p>
-                                            <p class="desc3" data-i18n="copyright">
-                                            </p>
-                                        </div>
-                                        <div class="m-form-field">
-                                            <div class="a-text-field">
-                                                <label for="text-input-tn">Email</label>
-                                                <input type="text" id="text-input-cpf" />
-                                            </div>
-                                        </div>
-                                        <div class="checkboxes">
-                                            <bbg-checkbox class="hydrated">
-                                                <div class="a-checkbox">
-                                                    <input
-                                                        type="checkbox"
-                                                        id="comfort"
-                                                        style="display: block" />
-                                                    <label for="comfort" data-i18n="consent_disclaimer"></label>
-                                                </div>
-                                            </bbg-checkbox>
-                                        </div>
-                                        <div class="checkboxes">
-                                            <bbg-checkbox class="hydrated">
-                                                <div class="a-checkbox">
-                                                    <input
-                                                        type="checkbox"
-                                                        id="marketing"
-                                                        style="display: block" />
-                                                    <label for="marketing" data-i18n="consent_copyright"></label>
-                                                </div>
-                                            </bbg-checkbox>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="m-dialog__code" id="pwc-dialog-code">
-                                    <span slot="code" data-i18n="accept-agreement"></span>
-                                </div>
-                                <div class="m-dialog__actions" id="pwc-dialog-actions">
-                                    <span slot="actions" style="display: block">
-                                        <p style="margin-top: 0px">
-                                            <bbg-button id="save-all-modal-dialog" class="hydrated">
-                                                <button
-                                                    type="button"
-                                                    class="a-button a-button--primary -without-icon">
-                                                    <div class="a-button__label" data-i18n="accept_button"></div>
-                                                </button>
-                                            </bbg-button>
-                                        </p>
-                                        <p>
-                                            <bbg-button
-                                                id="decline-all-modal-dialog"
-                                                class="hydrated">
-                                                <button
-                                                    type="button"
-                                                    class="a-button a-button--secondary -without-icon">
-                                                    <div class="a-button__label" data-i18n="reject_button"></div>
-                                                </button>
-                                            </bbg-button>
-                                        </p>
-                                        <div class="smallprint-links">
-                                            <span>
-                                                <bbg-link class="hydrated"><!---->
-                                                    <div class="a-link a-link--simple">
-                                                        <a
-                                                            href="bar?prevent-auto-open-privacy-settings"
-                                                            target="_self">Data protection notice</a>
-                                                    </div>
-                                                </bbg-link>
-                                            </span>
-                                            <span>
-                                                <bbg-link class="hydrated"><!---->
-                                                    <div class="a-link a-link--simple">
-                                                        <a
-                                                            href="foo?prevent-auto-open-privacy-settings"
-                                                            target="_self">Corporate information</a>
-                                                    </div>
-                                                </bbg-link>
-                                            </span>
-                                        </div>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </bbg-box>
-            </dialog>
-            <!---- END OF TERMS OF USE AND DISCLAIMER DIALOG ----->
-
             <div id="index_container" class="i_container">
-                <h3 data-i18n="nps_inner_title"></h3>
+                <h3 data-i18n="material_inner_title"></h3>
                 <h4><span data-i18n="inner_title"></span> <span><?PHP echo $_SESSION['training_id'] . " - " . $_SESSION['training_name'] ?></span></h4>
                 <div class="table_container">
                     <table class="m-table" id="training_table">
@@ -659,11 +302,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-        disclaimerDialog();
-
-        document.getElementById('decline-all-modal-dialog').addEventListener('click', () => {
-            location.href = 'login.php'
-        });
 
         document.getElementById('menu_btn').addEventListener('click', () => {
             location.href = 'login.php';
@@ -728,10 +366,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             });
     });
 
-    function disclaimerDialog() {
-        const discDialog = document.querySelector(".a-box--modal");
-        discDialog.classList.add('-show');
-    }
 
     async function fetchLanguageData(lang) {
         const response = await fetch(`../../languages/${lang}.json`);
@@ -750,15 +384,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             const key = element.getAttribute("data-i18n");
             element.textContent = langData[key];
         });
-
-        var selLanguage = document.getElementById("demo");
-        if (localStorage.getItem("language") === "es") {
-            selLanguage.options[1].defaultSelected = true;
-        } else if (localStorage.getItem("language") === "en") {
-            selLanguage.options[2].defaultSelected = true;
-        } else {
-            selLanguage.options[0].defaultSelected = true;
-        }
     }
 
     // Function to change language
