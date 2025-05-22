@@ -129,33 +129,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // login.php
 require_once 'config.php';  // starts session, sets up $pdo
 
+// Error handling configuration
+error_reporting(E_ALL); // Report all PHP errors
+ini_set('display_errors', 0); // Don't show errors to users
+ini_set('log_errors', 1); // Enable error logging
+ini_set('error_log', dirname(__DIR__) . '/logs/error.log'); // Set log file path
+
+// Helper function to send JSON response
+function sendJSON($data)
+{
+    header('Content-Type: application/json');
+    echo json_encode($data);
+    exit;
+}
 
 // Only intercept POSTs for AJAX
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header('Content-Type: application/json; charset=utf-8');
-
+   
     // Identify which dialog/form was submitted
     $form = $_POST['form'] ?? '';
     $email = filter_input(INPUT_POST, 'email_input', FILTER_VALIDATE_EMAIL);
 
     // Basic email check for all phases
     if (!$email) {
-        echo json_encode(['status' => 'error', 'message' => 'Please enter a valid email.']);
-        exit;
+        sendJSON(['status' => 'error', 'message' => 'Please enter a valid email.']);
     }
 
     switch ($form) {
         // ─────────────── Phase 1: Email only ───────────────
         case 'loginPhase1':
             // 1) Lookup user by email
-            $u = $pdo->prepare("SELECT id,role FROM users WHERE email=?");
+            $u = $pdo->prepare(
+                "SELECT id, role FROM users WHERE email=?"
+            );
             $u->execute([$email]);
             $user = $u->fetch(PDO::FETCH_ASSOC);
 
             if (!$user) {
                 // New user → open disclaimer dialog
-                echo json_encode(['status' => 'needNewUser']);
-                exit;
+                sendJSON(['status' => 'needNewUser']);
             }
 
             if ($user['role'] === 'trainer') {
@@ -163,14 +175,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $q = $pdo->prepare("
                       SELECT e.training_id, t.training_name, e.room_code
                         FROM events e
-                        JOIN training t ON e.training_id = t.training_id
+                        JOIN trainings t ON e.training_id = t.training_id
                        WHERE e.instructor_id = ?
                          AND CURDATE() BETWEEN e.start_date AND e.end_date
                     ");
                 $q->execute([$user['id']]);
                 $events = $q->fetchAll(PDO::FETCH_ASSOC);
 
-                echo json_encode([
+                sendJSON([
                     'status'           => 'teacher',
                     'role'             => 'trainer',
                     'events'           => $events,
@@ -184,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   SELECT e.training_id, t.training_name, e.room_code
                     FROM event_registrations er
                     JOIN events e ON er.event_id = e.id
-                    JOIN training t ON e.training_id = t.training_id
+                    JOIN trainings t ON e.training_id = t.training_id
                    WHERE er.user_id = ?
                      AND CURDATE() BETWEEN e.start_date AND e.end_date
                    LIMIT 1
@@ -199,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['training_id'] = $ev['training_id'];
                 $_SESSION['room_code']   = $ev['room_code'];
 
-                echo json_encode([
+                sendJSON([
                     'status'           => 'success',
                     'role'             => 'student',
                     'training_name'    => $ev['training_name'],
@@ -207,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
             } else {
                 // Registered user but not for today → need disclaimer
-                echo json_encode(['status' => 'needRegistration']);
+                sendJSON(['status' => 'needRegistration']);
             }
             exit;
 
@@ -215,16 +227,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // ────────── Phase 2a: Trainer selects event ──────────
         case 'loginPhase2Teacher':
             $training_id = trim($_POST['training_id'] ?? '');
+            $email       = filter_input(INPUT_POST, 'email_input', FILTER_VALIDATE_EMAIL);
+
             if (!$training_id) {
-                echo json_encode(['status' => 'error', 'message' => 'No training selected.']);
+                sendJSON(['status' => 'error', 'message' => 'No training selected.']);
                 exit;
             }
+
+            if (!$email) {
+                sendJSON(['status' => 'error', 'message' => 'No email provided.']);
+                exit;
+            }
+
             // Validate trainer
             $u = $pdo->prepare("SELECT id FROM users WHERE email=? AND role='trainer'");
             $u->execute([$email]);
             $user = $u->fetch(PDO::FETCH_ASSOC);
             if (!$user) {
-                echo json_encode(['status' => 'error', 'message' => 'Unauthorized.']);
+                sendJSON(['status' => 'error', 'message' => 'Unauthorized.']);
                 exit;
             }
             // Validate event
@@ -237,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $e->execute([$training_id]);
             $ev = $e->fetch(PDO::FETCH_ASSOC);
             if (!$ev) {
-                echo json_encode(['status' => 'error', 'message' => 'Invalid or expired session.']);
+                sendJSON(['status' => 'error', 'message' => 'Invalid or expired session.']);
                 exit;
             }
             // Set session
@@ -247,11 +267,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['room_code']   = $ev['room_code'];
 
             // Fetch name
-            $t = $pdo->prepare("SELECT training_name FROM training WHERE training_id = ?");
+            $t = $pdo->prepare("SELECT training_name FROM trainings WHERE training_id = ?");
             $t->execute([$training_id]);
             $tn = $t->fetchColumn();
 
-            echo json_encode([
+            sendJSON([
                 'status'           => 'success',
                 'role'             => 'trainer',
                 'training_name'    => $tn,
@@ -314,11 +334,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['room_code']   = $ev['room_code'];
 
             // Fetch name
-            $t = $pdo->prepare("SELECT training_name FROM training WHERE training_id = ?");
+            $t = $pdo->prepare("SELECT training_name FROM trainings WHERE training_id = ?");
             $t->execute([$code]);
             $tn = $t->fetchColumn();
 
-            echo json_encode([
+            sendJSON([
                 'status'           => 'success',
                 'role'             => 'student',
                 'training_name'    => $tn,
@@ -330,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // ─────────────────────────────────────────────────
         default:
             http_response_code(400);
-            echo json_encode(['status' => 'error', 'message' => 'Unknown form']);
+            sendJSON(['status' => 'error', 'message' => 'Unknown form']);
             exit;
     }
 }
@@ -362,228 +382,381 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script defer="" src="../js/main.js"></script>
     <title>CTA | Training App</title>
 
-</head>
-<style>
-    body {
-        overflow: hidden;
-        margin: 0;
-    }
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+        }
 
-    main {
-        height: calc(100vh - 161px);
-    }
+        main {
+            height: calc(100vh - 161px);
+        }
 
-    .main_container {
-        height: calc(100vh - 161px);
-        /* Full height minus header (70px) and footer (70px) */
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        /* Allow vertical scrolling */
-    }
+        .main_container {
+            height: calc(100vh - 161px);
+            /* Full height minus header (70px) and footer (70px) */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            /* Allow vertical scrolling */
+        }
 
-    #index_container {
-        flex-grow: 1;
-        /* Allow it to grow and fill the available space */
-        display: flex;
-        flex-direction: column;
-        /* Ensure it stacks its children vertically */
-        margin-bottom: 70px;
-    }
-
-    .footer {
-        position: sticky;
-        /* Keeps it at the bottom */
-        bottom: 0;
-        background-color: var(--bosch-white);
-        z-index: 10;
-    }
-
-    @media (min-width: 992px) {
         #index_container {
+            flex-grow: 1;
+            /* Allow it to grow and fill the available space */
+            display: flex;
+            flex-direction: column;
+            /* Ensure it stacks its children vertically */
+            margin-bottom: 70px;
+        }
+
+        #login_form>:first-child {
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            position: sticky;
+            /* Keeps it at the bottom */
+            bottom: 0;
+            background-color: var(--bosch-white);
+            z-index: 10;
+        }
+
+        @media (min-width: 992px) {
+            #index_container {
+                margin-left: auto;
+                margin-top: auto;
+            }
+        }
+
+        @media (max-height: 780px) {
+            #index_container {
+                margin-bottom: 150px;
+            }
+        }
+
+        .i_container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
             margin-left: auto;
-            margin-top: auto;
         }
-    }
 
-    @media (max-height: 780px) {
-        #index_container {
-            margin-bottom: 150px;
+        @media (min-width: 768px) {
+            .i_container {
+                width: 750px;
+            }
         }
-    }
 
-    .i_container {
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    @media (min-width: 768px) {
-        .i_container {
-            width: 750px;
+        @media (min-width: 992px) {
+            .i_container {
+                width: 970px;
+            }
         }
-    }
 
-    @media (min-width: 992px) {
-        .i_container {
-            width: 970px;
+        @media (min-width: 1200px) {
+            .i_container {
+                width: 1170px;
+            }
         }
-    }
 
-    @media (min-width: 1200px) {
-        .i_container {
-            width: 1170px;
+        .menu_title {
+            display: inline-block;
+            width: 100%;
         }
-    }
 
-    .menu_title {
-        display: inline-block;
-        width: 100%;
-    }
+        .menu_title p {
+            margin-left: 40px;
+            margin-bottom: 30px;
+        }
 
-    .menu_title p {
-        margin-left: 40px;
-        margin-bottom: 30px;
-    }
+        .menu_title p {
+            font-size: 20px;
+            color: var(--bosch-gray-35);
+            line-height: 1.3em;
+            font-weight: 400;
+        }
 
-    .menu_title p {
-        font-size: 20px;
-        color: var(--bosch-gray-35);
-        line-height: 1.3em;
-        font-weight: 400;
-    }
+        @media (min-width: 992px) {
+            .card_section {
+                margin-left: 20px;
+            }
+        }
 
-    @media (min-width: 992px) {
         .card_section {
-            margin-left: 20px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
         }
-    }
 
-    .card_section {
-        display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        background: var(--bosch-white);
-        justify-content: center;
-        gap: 40px;
-    }
-
-    @media (min-width: 1000px) {
-        .card_section {
-            gap: 20px;
+        @media (min-width: 1000px) {
+            .card_section {
+                gap: 20px;
+            }
         }
-    }
 
-    .card {
-        width: 240px;
-        height: 140px;
-        margin: 20px;
-        border-radius: 0;
-        background: var(--bosch-blue-50);
-        color: var(--bosch-white);
-        box-sizing: border-box;
-        -webkit-transition: -webkit-transform 0.1s ease-in-out;
-        -moz-transition: -moz-transform 0.1s ease-in-out;
-        transition: transform 0.1s ease-in-out;
-    }
+        .card {
+            width: 240px;
+            height: 140px;
+            margin: 20px;
+            border-radius: 0;
+            background: var(--bosch-blue-50);
+            color: var(--bosch-white);
+            box-sizing: border-box;
+            -webkit-transition: -webkit-transform 0.1s ease-in-out;
+            -moz-transition: -moz-transform 0.1s ease-in-out;
+            transition: transform 0.1s ease-in-out;
+        }
 
-    .card:active {
-        transform: scale(0.95);
-        background-color: var(--bosch-blue-40);
-    }
+        .card:active {
+            transform: scale(0.95);
+            background-color: var(--bosch-blue-40);
+        }
 
-    .card[disabled] {
-        pointer-events: none;
-        background: var(--bosch-gray-80);
-        color: var(--bosch-gray-45);
-    }
+        .card[disabled] {
+            pointer-events: none;
+            background: var(--bosch-gray-80);
+            color: var(--bosch-gray-45);
+        }
 
-    .card[disabled] .card_text {
-        color: var(--bosch-gray-45);
-    }
+        .card[disabled] .card_text {
+            color: var(--bosch-gray-45);
+        }
 
-    .c-icon {
-        font-size: 45px;
-        position: relative;
-        top: 20px;
-        left: 15px;
-    }
+        .c-icon {
+            font-size: 45px;
+            position: relative;
+            top: 20px;
+            left: 15px;
+        }
 
-    .card_text {
-        font-size: 1em;
-        font-weight: 700;
-        margin-left: 15px;
-        margin-top: 30px;
-        color: var(--bosch-white);
-    }
+        .card_text {
+            font-size: 1em;
+            font-weight: 700;
+            margin-left: 15px;
+            margin-top: 30px;
+            color: var(--bosch-white);
+        }
 
-    .lower {
-        display: none;
-    }
+        .lower {
+            display: none;
+        }
 
-    .course_name {
-        font-size: 2rem;
-    }
+        .course_name {
+            font-size: 2rem;
+        }
 
-    .widget-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 1rem 0;
-    }
+        .widget-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+        }
 
-    .mc-container {
-        display: flex;
-        justify-content: space-between;
-        gap: 2rem;
-        width: 100%;
-        max-width: 800px;
-    }
+        .mc-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
 
-    .microcard {
-        flex: 1;
-        max-width: 100px;
-        aspect-ratio: 1 / 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.2s;
-        padding: 0.5rem;
-        text-align: center;
-        background-color: var(--bosch-blue-50);
-    }
+        .microcard {
+            flex: 1;
+            max-width: 100px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            padding: 0.5rem;
+            text-align: center;
+            background-color: var(--bosch-blue-50);
+        }
 
-    .microcard:hover {
-        background: var(--bosch-blue-40);
-    }
+        .microcard:hover {
+            background: var(--bosch-blue-40);
+        }
 
-    .mc-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .mc-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .md-icon {
-        font-size: 2rem;
-        color: var(--bosch-white);
-        margin-top: 0.25rem;
-    }
+        .md-icon {
+            font-size: 2rem;
+            color: var(--bosch-white);
+            margin-top: 0.25rem;
+        }
 
-    .mc-label {
-        font-size: 0.8rem;
-        color: var(--bosch-white);
-        margin-top: 0.25rem;
-        line-height: 1.1;
-        max-height: 2.4rem;
-        overflow: hidden;
-        margin-top: 15px;
-    }
-</style>
+        .mc-label {
+            font-size: 0.8rem;
+            color: var(--bosch-white);
+            margin-top: 0.25rem;
+            line-height: 1.1;
+            max-height: 2.4rem;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        /* -----------  DISCLAIMER DIALOG STYLE --------*/
+
+
+        .m-dialog__actions span {
+            margin-top: 1.5rem;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .a-box {
+            max-width: 52rem;
+            max-height: 92vh;
+            overflow-y: scroll;
+        }
+
+        .second-p {
+            margin-top: 2rem;
+        }
+
+        .checkboxes {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .a-checkbox label {
+            font-size: 0.9rem;
+            --font-size: 0.9rem;
+        }
+
+        .a-checkbox label::before {
+            height: 1rem;
+            width: 1rem;
+        }
+
+        input[type="checkbox"]:focus-visible+label::before {
+            outline: auto;
+            outline-offset: 3px;
+        }
+
+        bbg-button>button {
+            width: 100%;
+            margin-left: 0 !important;
+        }
+
+        .a-checkbox input[type="checkbox"]:checked~label:after {
+            font-size: 1rem;
+            height: 1rem;
+            line-height: 1;
+            width: 1rem;
+        }
+
+        .a-che .small-print-link {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            font-size: var(--pwc-font-size);
+            color: var(--bosch-blue-50);
+        }
+
+        .m-form-field {
+            margin-top: 2rem;
+        }
+
+        .read-more {
+            margin-top: 0.75rem;
+            margin-left: 32.5px;
+        }
+
+        .smallprint-links {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .smallprint-links span:nth-child(2) {
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            padding-left: 1rem;
+        }
+
+        .smallprint-links span:last-child:after {
+            content: "";
+            margin: 0;
+            padding-top: 0.1rem;
+        }
+
+        .desc1,
+        .desc2,
+        .desc3 {
+            font-style: italic;
+            font-size: 0.9rem;
+            --font-size: 0.9rem;
+            text-align: justify;
+            margin-block-start: 2em;
+            margin-block-end: 2em;
+        }
+
+        #disc_form {
+            overflow-y: auto;
+        }
+
+        .m-dialog__headline {
+            font-size: 1.2rem;
+            --font-size: 1.2rem;
+        }
+
+        .m-dialog__code {
+            --font-size: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--bosch-red-50);
+        }
+
+        @media (max-width: 48rem) {
+            .smallprint-links {
+                -ms-flex-direction: column;
+                flex-direction: column;
+                -ms-flex-align: center;
+                align-items: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+            }
+
+            .smallprint-links span {
+                padding: 0.75rem 0;
+                -ms-flex-pack: center !important;
+                justify-content: center !important;
+            }
+
+            .smallprint-links span:nth-child(2) {
+                padding-left: 0rem;
+                margin-top: 0;
+            }
+
+            .smallprint-links span:after {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
 
 <body>
+
     <header class="o-header">
         <div class="o-header__top-container">
             <div class="e-container">
@@ -730,7 +903,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     class="m-dialog__body"
                     id="dialog-alert-dialog-info-without-close-button-description" data-i18n="Login_inst">
                 </div>
-                <form id="login_form" method="POST" action="login.php">
+                <form id="login_form" method="POST" action="login2.php">
                     <input type="hidden" name="form" value="loginPhase1">
                     <div class="a-text-field">
                         <label for="email_input" data-i18n="email"></label>
@@ -768,7 +941,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!------- TRAINING SELECTOR DIALOG ---------->
         <dialog
             class="m-dialog -floating-shadow-s -floating"
-            id="trainingSelector"
+            id="training-dialog"
             aria-labelledby="dialog-alert-dialog-info-without-close-button-title" style="max-width: 30rem !important;">
             <div class="m-dialog__remark --info"></div>
             <div class="m-dialog__header">
@@ -785,8 +958,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     class="m-dialog__body"
                     id="dialog-alert-dialog-info-without-close-button-description" data-i18n="training_selector_inst">
                 </div>
-                <form id="training_form" method="POST" action="login.php">
+                <form id="training_form" method="POST" action="login2.php">
                     <input type="hidden" name="form" value="loginPhase2Teacher">
+                    <input type="hidden" name="email_input" id="trainingEmail">
                     <div class="a-dropdown">
                         <label for="trainingSelect">Select Training:</label>
                         <select id="trainingSelect" name="training_id" class="form-control">
@@ -816,7 +990,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <dialog class="m-dialog -floating-shadow-s -floating" id="disc-dialog">
             <form id="disc_form" method="POST" action="login.php">
                 <input type="hidden" name="form" value="loginPhase2Student">
-                <div class="m-dialog__content">
+                <div class="m-dialog__content" style="overflow-y: unset;">
                     <div
                         class="m-dialog__top-content"
                         id="pwc-dialog-top-content"></div>
@@ -883,7 +1057,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </p>
                             <p>
                                 <bbg-button
-                                    id="decline-all-modal-dialog"
+                                    id="discCancel"
                                     class="hydrated">
                                     <button
                                         type="button"
@@ -1080,14 +1254,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // DIALOG ELEMENTS
-        const loginDialog = document.getElementById('login-dialog');
-        const discDialog = document.getElementById('disc-dialog');
-        const widgetDialog = document.getElementById('widget-dialog');
-        const trainingDialog = document.getElementById('trainingSelector');
 
         // FORM ELEMENTS
         const loginForm = document.getElementById("login_form");
+        const trainingForm = document.getElementById('training_form');
+        const discForm = document.getElementById('disc_form');
         const loginError = document.getElementById("loginError");
         const discError = document.getElementById("discError");
         const trainingError = document.getElementById("trainingError");
@@ -1096,7 +1267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const allCards = document.querySelectorAll('.card');
         const lang_option = document.getElementById("demo");
 
-
+        let pendingEmail;
 
         /*========== CARD STATE FUNCTIONS ==========*/
         // Card IDs that must always be enabled
@@ -1107,6 +1278,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function setInitialCardState(accessibleCards, userRole) {
             if (!accessibleCards) {
                 console.error('Session data is missing or invalid.');
+                alert('Session data is missing or invalid.');
                 return;
             }
             // Ensure the accessibleCards array is valid
@@ -1139,28 +1311,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /*========== END OF CARD STATE FUNCTIONS ==========*/
 
-        /*========== LOGIN DIALOG FUNCTIONS ==========*/
+        /*========== DIALOG FUNCTIONS ==========*/
+
         // handle open login dialog
         document.getElementById('login_btn').addEventListener('click', () => {
-            loginDialog.showModal();
+            showDialog('login-dialog');
         });
 
-        // handle close login dialog
-        document.getElementById('loginCancel').addEventListener('click', () => {
-            loginDialog.close();
-        });
-
+        // handle open widget dialog
         document.getElementById('2').addEventListener('click', () => {
-            widgetDialog.showModal();
-        })
-
-        document.getElementById('widgetCancel').addEventListener('click', () => {
-            widgetDialog.close();
-        })
+            showDialog('widget-dialog');
+        });
 
         /*========== END OF LOGIN DIALOG FUNCTIONS ==========*/
 
         /*========== LOGOUT FUNCTIONS ==========*/
+
         // Add event listener for logout action
         const logoutButton = document.getElementById("logout_btn"); // Adjust ID as necessary
         logoutButton.addEventListener("click", function() {
@@ -1175,10 +1341,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         location.reload();
                     } else {
                         console.error("Logout failed");
+                        alert("Logout failed");
                     }
                 })
                 .catch((err) => {
                     console.error("Error during logout:", err);
+                    alert("Error during logout:", err);
                 });
         });
 
@@ -1186,50 +1354,108 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /*========== LOGIN FORM FUNCTIONS ==========*/
 
-        // Handle form submission
-        loginForm.addEventListener("submit", function(e) {
-            e.preventDefault(); // Prevent default form submission
+        // Phase 1: email only
+        loginForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            loginError.textContent = '';
+            pendingEmail = loginForm.email_input.value.trim();
 
-            const courseCode = document.getElementById("text-input-code").value.trim();
-
-            fetch("login.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    body: `course_code=${encodeURIComponent(courseCode)}`,
-                })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    if (data.status === "success") {
-                        // Close dialog and update session data
-                        loginDialog.close();
-                        setInitialCardState(data.accessible_cards, data.role);
-                        setInitialTitleState(data.training_name);
-                        console.log(
-                            "Logged in as:",
-                            data.role,
-                            data.training_id,
-                            data.training_name,
-                            data.accessible_cards
-                        );
-                    } else if (data.status === "error") {
-                        // Show specific error message
-                        errorMessage.innerText = data.message;
-                    } else {
-                        throw new Error("Unexpected response structure");
-                    }
-                })
-                .catch((err) => {
-                    console.error("Error:", err);
-                    errorMessage.innerText = "An unexpected error occurred. Please try again.";
-                });
+            try {
+                const data = await postForm(loginForm);
+                console.log(data);
+                switch (data.status) {
+                    case 'success':
+                        // student immediate success
+                        applyLogin(data);
+                        break;
+                    case 'teacher':
+                        // populate and open Training dialog
+                        populateTraining(data.events);
+                        break;
+                    case 'needRegistration':
+                    case 'needNewUser':
+                        // open Disclaimer dialog
+                        discError.textContent = data.status === 'needNewUser' ?
+                            'New user: enter code & accept terms' :
+                            'Please enter code & accept terms';
+                        showDialog('disc-dialog');
+                        break;
+                    default:
+                        loginError.textContent = data.message || 'Unexpected error';
+                }
+            } catch (err) {
+                loginError.textContent = 'Network error, try again';
+                console.error(err);
+            }
         });
+
+        // Phase 2a: trainer picks session
+        trainingForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            trainingError.textContent = '';
+
+            document.getElementById('trainingEmail').value = pendingEmail;
+
+            try {
+                const data = await postForm(trainingForm);
+                if (data.status === 'success') {
+                    applyLogin(data); 
+                } else {
+                    trainingError.textContent = data.message || 'Selection failed';
+                }
+            } catch (err) {
+                trainingError.textContent = 'Network error';
+            }
+        });
+
+        // Phase 2b: student enters code + T&C
+        discForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            discError.textContent = '';
+
+            try {
+                discForm.email_input = pendingEmail;
+                const data = await postForm(discForm);
+                if (data.status === 'success') applyLogin(data);
+                else discError.textContent = data.message || 'Registration failed';
+            } catch (err) {
+                discError.textContent = 'Network error';
+            }
+        });
+
+        // Common apply after final success
+        function applyLogin(data) {
+            // set cards + title from data.accessible_cards, data.role, data.training_name
+            setInitialCardState(data.accessible_cards, data.role);
+            setInitialTitleState(data.training_name);
+            closeAllDialogs();
+        }
+
+        // Helpers to open/populate dialogs
+        function populateTraining(events) {
+            const sel = document.getElementById('trainingSelect');
+            sel.innerHTML = `<option value="">Select…</option>` +
+                events.map(ev =>
+                    `<option value="${ev.training_id}">${ev.training_id} - ${ev.training_name}</option>`
+                ).join('');
+            showDialog('training-dialog');
+        }
+
+        function showDialog(id) {
+            document.getElementById(id).showModal();
+        }
+
+        function closeAllDialogs() {
+            ['login-dialog', 'training-dialog', 'disc-dialog', 'widget-dialog']
+            .forEach(id => document.getElementById(id).close());
+        }
+
+        // Wire cancel buttons
+        ['loginCancel', 'trainingCancel', 'discCancel', 'widgetCancel'].forEach(btnId => {
+            document.getElementById(btnId)
+                .addEventListener('click', () => closeAllDialogs());
+        });
+
 
         /*========== END OF LOGIN FORM FUNCTIONS ==========*/
 
@@ -1253,6 +1479,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 
     /*========== END OF INITIAL STATE FUNCTIONS ==========*/
+
+    /* ========== COMMON FORM POSTING FUNCTION ===========*/
+
+    async function postForm(formEl) {
+        const resp = await fetch(formEl.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(formEl))
+        });
+        if (!resp.ok) throw new Error(`Network ${resp.status}`);
+        return resp.json();
+    }
+
+    /* =========== END OF COMMON POSTING FUNCTION ===========*/
 
     /* =========== Navigation functions =========== */
     function openUnit() {
@@ -1355,7 +1594,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'yahoo.com',
         'outlook.com',
         'hotmail.com',
-        'bosch.com.br',
+        'br.bosch.com',
         'custom'
     ];
 

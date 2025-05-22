@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07/05/2025 às 19:58
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.1.25
+-- Generation Time: May 20, 2025 at 06:29 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `trainingapp`
+-- Database: `trainingapp`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `abreviations`
+-- Table structure for table `abreviations`
 --
 
 CREATE TABLE `abreviations` (
@@ -33,7 +33,7 @@ CREATE TABLE `abreviations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `abreviations`
+-- Dumping data for table `abreviations`
 --
 
 INSERT INTO `abreviations` (`abbreviation`, `meaning`) VALUES
@@ -1100,155 +1100,64 @@ INSERT INTO `abreviations` (`abbreviation`, `meaning`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `event`
+-- Table structure for table `events`
 --
 
-CREATE TABLE `event` (
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
   `training_id` int(5) NOT NULL,
   `start_date` date NOT NULL,
-  `end_date` date NOT NULL
+  `end_date` date NOT NULL,
+  `room_code` varchar(5) NOT NULL,
+  `instructor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `event`
---
-
-INSERT INTO `event` (`training_id`, `start_date`, `end_date`) VALUES
-(1002, '2025-03-31', '2025-04-04'),
-(1003, '2025-04-07', '2025-04-11'),
-(2001, '2025-03-17', '2025-03-21'),
-(2001, '2025-04-22', '2025-04-23'),
-(2003, '2025-02-21', '2025-02-28'),
-(2003, '2025-03-12', '2025-03-13'),
-(3002, '2025-02-21', '2025-02-28'),
-(3002, '2025-03-10', '2025-03-11'),
-(3003, '2025-05-05', '2025-05-09'),
-(3005, '2025-03-24', '2025-03-28'),
-(3010, '2025-01-27', '2025-01-28'),
-(3010, '2025-02-21', '2025-02-28'),
-(3010, '2025-03-10', '2025-03-12'),
-(3010, '2025-03-31', '2025-04-04'),
-(4010, '2025-01-28', '2025-01-28'),
-(4010, '2025-01-29', '2025-01-30'),
-(4010, '2025-03-31', '2025-04-04'),
-(7001, '2025-02-21', '2025-02-28'),
-(7001, '2025-03-10', '2025-03-12'),
-(9999, '2025-01-24', '2026-01-31'),
-(50011, '2025-02-21', '2025-02-28'),
-(50012, '2025-02-26', '2025-02-28'),
-(50013, '2025-04-14', '2025-04-16'),
-(50021, '2025-03-24', '2025-03-28'),
-(50022, '2025-04-04', '2025-04-04'),
-(50022, '2025-04-07', '2025-04-11');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `nps_survey`
+-- Table structure for table `event_registrations`
 --
 
-CREATE TABLE `nps_survey` (
+CREATE TABLE `event_registrations` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `cpf` varchar(20) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `telephone` varchar(20) NOT NULL,
-  `rating` int(11) NOT NULL,
-  `nps` int(11) NOT NULL,
-  `comments` text DEFAULT NULL,
-  `agree` int(11) NOT NULL,
-  `training_id` int(11) NOT NULL,
-  `training_name` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `created_date` date GENERATED ALWAYS AS (cast(`created_at` as date)) STORED
+  `event_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `first_joined` datetime NOT NULL DEFAULT current_timestamp(),
+  `last_joined` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `nps_survey`
---
-
-INSERT INTO `nps_survey` (`id`, `name`, `cpf`, `email`, `telephone`, `rating`, `nps`, `comments`, `agree`, `training_id`, `training_name`, `created_at`) VALUES
-(7, 'aaaaaaaaaaaaa', 'bbbbbbbbbb', 'ccccccccccc', 'dddddddddd', 5, 2, 'kkkkkkkkkkkkkk', 1, 1021, 'REPARO DIESEL MECANICO II - BOMBA P', '2024-12-30 16:48:50'),
-(8, 'a', 'b', 'c', 'd', 5, 5, 'f', 1, 1021, 'REPARO DIESEL MECANICO II - BOMBA P', '2024-12-30 19:34:09'),
-(9, 'h', 'm', 'k', 'u', 3, 5, NULL, 1, 1021, 'REPARO DIESEL MECANICO II - BOMBA P', '2024-12-30 19:36:08'),
-(10, 'Douglas frois Fernandes', '13429187621', 'douglasfrois99@gmail.com', '31975658660', 5, 10, NULL, 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-01-30 19:11:11'),
-(11, 'Marcos Roberto Campos', '12893879829', 'marcoskmpos@gmail.com', '11998256803', 5, 10, 'Agregar ao meu dia a dia de trabalho e aperfeiçoamento', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-01-30 19:14:55'),
-(12, 'Ramon perez', '3618932812', 'Perezreparosautomotivos@HOTMAIL.COM', '19999275638', 5, 10, 'Renato e Ricardo extremamente atenciosos e explicação prática e teórica impecável, estrutura bosch muito boa', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-01-30 19:14:59'),
-(13, 'Gustavo', '39707686839', 'gustavo.rigonato@br.bosch.com', '19997717577', 5, 10, NULL, 1, 50012, 'CONSULTOR DE SERVICIOS', '2025-02-27 19:43:19'),
-(14, 'Fábio Luiz Capretz', '287455798', 'Fabio_capretz@honda.com.br', '19997453555', 5, 10, 'Qualidade do conteúdo e didática', 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:05:11'),
-(15, 'JESUS ANTONIO FERREIRA', '25960640813', 'Jesus_ferreira@honda.com.br', '19981995668', 4, 9, NULL, 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:05:19'),
-(16, 'Massao KODAMA DOURADO', '37907438870', 'Massao_dourado@honda.com.br', '1938644574', 5, 10, 'Didática do instrutor, disponibilidade de veículos e material de treinamento', 0, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:05:27'),
-(17, 'Larissa Fauat Schraier', '06955982958', 'Lfschraier@gmail.com', '19982961929', 5, 10, NULL, 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:06:05'),
-(18, 'André dos Santos Cardoso', '31889993808', 'andre_c13@hotmail.com', '11971212904', 5, 10, 'Apresentação dos tópicos com muita informação.', 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:06:34'),
-(19, 'Mauri Takashi Ikenaga', '340135678-06', 'Mauri.ikenaga@gmail.com', '11999636645', 4, 9, NULL, 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:06:43'),
-(20, 'Julio Felipe da Silva Neto', '588486802', 'julio_silva@honda.com.br', '19999534537', 5, 9, NULL, 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:06:45'),
-(21, 'James Heriston Bastos Pereira', '41159728828', 'hames.bastos@gmail.com', '19981285242', 5, 10, 'O instrutor Leonardo demonstra muito conhecimento sobre o assunto, além de possuir uma excelente didática.', 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:06:56'),
-(22, 'Leonardo de Oliveira  Cristino', '25253297839', 'Leonardo_cristino@honda.com.br', '994449716', 4, 6, NULL, 0, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:06:58'),
-(23, 'Fábio Nakai Saito', '470214016', 'fabio_nsaito@honda.com.br', '981818045', 5, 10, 'Treinamento rico em material didático com exercícios práticos muito bons.', 1, 7001, 'VEICULO HIBRIDO-ELETRICO FASE 1', '2025-03-12 11:07:43'),
-(24, 'Hames Heriston Bastos Pereira', '41159728828', 'hames.bastos@gmail.com', '19981285242', 5, 10, NULL, 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:34:24'),
-(25, 'Larissa Fauat Schraier', '06955982958', 'Lfschraier@gmail.com', '19982961929', 5, 10, NULL, 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:34:27'),
-(26, 'Julio Felipe da Silva Neto', '588486802', 'julio_silva@honda.com.br', '19999534537', 5, 9, NULL, 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:34:50'),
-(27, 'Jesus Antônio Ferreira', '25960640813', 'Jesus_ferreira@honda.com.br', '19981995668', 4, 9, NULL, 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:34:53'),
-(28, 'Massao Kodama Dourado', '37907438870', 'Massao_dourado@honda.com.br', '1938644574', 5, 10, 'Ensino junto do veículo permite melhor entendimento e aprendizado', 0, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:35:08'),
-(29, 'Fábio Luiz Capretz', '287455798', 'fabio_capretz@honda.com.br', '19997453555', 5, 10, 'Conteúdo e didática', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:35:15'),
-(30, 'Leonardo de Oliveira  Cristino', '25253297839', 'Leonardo_cristino@honda.com.br', '994449716', 4, 7, NULL, 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:36:30'),
-(31, 'Fábio Nakai Saito', '470214016', 'fabio_nsaito@honda.com.br', '981818045', 5, 10, 'Material didático, instrutor qualificado.', 0, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:36:37'),
-(32, 'Mauri Takashi Ikenaga', '340135678-06', 'mauri.ikenaga@gmail.com', '11999636645', 4, 9, NULL, 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:37:35'),
-(33, 'André dos Santos Cardoso', '31889993808', 'andre_c13@hotmail.com', '11971212904', 5, 10, 'Conteúdo Muito interessante.', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-03-12 19:38:52'),
-(34, 'Gabriel Augusto da Silva', '53176814801', 'Gs027608@gmail.com', '14996063752', 5, 10, NULL, 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:02:37'),
-(35, 'Brenda Lourenço Justino', '12262985677', 'Brenda.lourenco07@gmail.com', '61995990502', 5, 10, 'Conteúdo completo', 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:02:40'),
-(36, 'Victor Ricardo Oliveira ribeiro', '13794261623', 'Victorricardo812@gmail.com', '34999872483', 5, 10, NULL, 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:03:00'),
-(37, 'Thales Alberto', '87210193120', 'thalesalbertosantans@gmail.com', '34991083522', 5, 10, 'Conhecimento profissional  com qualidade', 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:03:38'),
-(38, 'Wesley de Faria Oliveira', '13626153665', 'Woliveira852@gmail.com', '34999686332', 5, 10, 'Informações claras bem explicativas de fácil entendimento', 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:04:17'),
-(39, 'Gilson Fernando Campos Barros Borges', '02099517371', 'Gilson_fernando@hotmail.com', '98985219359', 5, 10, NULL, 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:05:05'),
-(40, 'Jonas Charles gabriel', '10456264655', 'Jonasg@nanya.com.br', '34988452735', 5, 10, 'Didatica objetiva associada a prática na oficina.', 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:05:23'),
-(41, 'Antônio Moisés Giacomini', '04189099899', 'amgiacominifilho@hotmail.com', '19981120003', 5, 7, 'Bosco completa sempre.', 1, 2003, 'DIAGNOSTICO AVANCADO COM SCANNER', '2025-03-13 20:09:44'),
-(42, 'João Paulo de Souza Mangaba', '52371929808', 'joao.paulo.mangaba@gmail.com', '14996911145', 5, 10, 'Excelente', 0, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-03-20 19:55:42'),
-(43, 'Victor Augusto Botelho', '16382123684', 'botelhovictor892@gmail.com', '19989553449', 5, 10, 'O professor bem gente boa e ele ensina bem', 1, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-03-20 19:56:35'),
-(44, 'Rogério Rodrigues Herrera Leite', '36738086806', 'Rogério.leite@sp.senai.br', '014997861900', 5, 10, 'infraestrutura, conteúdo excelente e a capacidade técnica do instrutor que é formidável.', 1, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-03-20 19:56:53'),
-(45, 'PAULO ROBERTO  DRINGOLI FILHO', '78598010600', 'Paulãodr@gmail,com', '35999445911', 5, 10, NULL, 1, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-03-20 19:57:32'),
-(46, 'Luiz Queiroz da Silva Neto', '83424253472', 'LUIZQUEIROZ9753@GMAIL.COM', '948309257', 5, 10, 'Muito bom obrigado', 1, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-03-20 19:59:47'),
-(47, 'Sérgio Ricardo do Val', '258 023 468-33', 'Sergioricardodoval@gmail.com', '11993673470', 5, 10, 'Gostei muito do material técnico e dinâmica de testes \nProfessor muito fera\nSó tem a agradecer \nMuito obrigado', 1, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-03-20 20:04:03'),
-(48, 'João Paulo de Souza Mangabq', '52329808', 'joao.paulo.mangaba@gmail.com', '14996911145', 5, 10, NULL, 1, 3005, ' ELETRONICA VEICULAR APLICADA', '2025-03-27 18:36:55'),
-(49, 'Rogério Rodrigues Herrera Leite', '36738086806', 'Rogério.leite@sp.senai.br', '014997861900', 5, 10, 'Informações técnicas atualizadas,  infraestrutura atualizada  e instrutor muito bem capacitado.', 1, 3005, ' ELETRONICA VEICULAR APLICADA', '2025-03-27 18:36:58'),
-(50, 'Ronaldo Garcia', '10438745850', 'ronaldg_63@hotmail.com', '11997590491', 5, 10, 'Dinâmico, conteúdo maravilhoso, ótimo material, ótimo instrutor/professor', 1, 3005, ' ELETRONICA VEICULAR APLICADA', '2025-03-27 18:38:40'),
-(51, 'Leandro Lucas de Freitas', '35147096884', 'leandrolucasfreitas2511@gmail.com', '11958109211', 5, 10, 'Desde do conhecimento do professor muito amplo à estrutura do curso e da empresa.', 1, 3005, ' ELETRONICA VEICULAR APLICADA', '2025-03-27 18:38:50'),
-(52, 'Santiago', '1721805727', 'fillmax366@gmail.com', '593998855776', 5, 10, 'El curso fue muy prático y solventó mis requerimentos de informacion acerca de Los temas que se trataron', 1, 50021, 'ESP_DIAG_VEH_LIV', '2025-03-28 15:59:12'),
-(53, 'José Edward violetas olaya', 'Gwgw', 'Edward108790@gmail.com', '3173659966', 5, 10, 'Excelentes instrutores se tomando el tempo para hablar y explicar el tema \nResuelven todas tus dudas muy bien capacitados \nGracias por todo espero volver pronto', 0, 50021, 'ESP_DIAG_VEH_LIV', '2025-03-28 15:59:37'),
-(54, 'Milton Javier Álvares Baidal', '1721838645', 'Performancegaragemotors@gmail.com', '+59309910101208', 5, 9, 'Excelente curso pero poço tempo pra realizarmos en 1 semana seria Bueno entender teremos que por falta de tiempo no llego a verificar, del mesmo modo Un recuerdopor parte de lá empresa .\nFelicidades y graças por todo.', 1, 50021, 'ESP_DIAG_VEH_LIV', '2025-03-28 15:59:53'),
-(55, 'Matias Rodrigo Suazo Jimenez', '19.812.516-4', 'matiassuazo.jimenez@gmail.com', '+56962361245', 5, 10, 'Excelente curso, informacion y presentacion cumple todas las expectativas. Agradecer a los instructores porque responden todas las preguntas, ya sean parte del programa o no.', 1, 50021, 'ESP_DIAG_VEH_LIV', '2025-03-28 16:00:00'),
-(56, 'Mateus Souza de Andrade', '45259080840', 'Mateus.andrade@br.bosch.com', '19982302037', 5, 10, 'Prática e teoria combinada de forma muito bem explicativa, dinâmica, eficiente e eficaz.', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:02:30'),
-(57, 'João Paulo de Souza Mangaba', '52371929808', 'joao.paulo.mangaba@gmail.com', '14996911145', 5, 10, 'Excelente curso', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:02:52'),
-(58, 'Lucas Alberto Visentin', '50133671828', 'lucasvisentin8@gmail.com', '11934180781', 5, 10, 'Gostei bastante do treinamento primeira vez na bosch também lugar top área se treinamento super completa indicaria sim.', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:03:15'),
-(59, 'Marcos Hiroshi Yoshida', '14709468826', 'marcos@hibridoautocenter.com.br', '11995638449', 5, 10, 'Material técnico, boa explicação e estrutura', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:03:21'),
-(60, 'Rogério Rodrigues Herrera Leite', '36738086806', 'Rogério.leite@sp.senai.br', '014997861900', 5, 10, 'Infraestrutura,  novidades tecnológicas e conhecimento técnico do instrutor.', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:03:35'),
-(61, 'Douglas Alberto  Visentin', '22658342896', 'douglasvisentin@hotmail.com', '11998543771', 5, 10, 'Conhecimento informação', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:03:54'),
-(62, 'Fábio Sywon', '275268536', 'Fabiosywon@gmail.com', '11978363090', 5, 10, 'Gostei muito do professor, equipamento para o treinamento.', 1, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:04:08'),
-(63, 'Reginaldo Defani', '10380202808', 'Redefani@Hotmail.com', '11980266632', 5, 8, 'Ótimo PROFESSOR', 0, 4010, 'DIAGNOSTICO DE SISTEMAS ASSIST CONDUCAO ADAS', '2025-04-01 20:10:23'),
-(64, 'Lucas monteiro de sousa', '431822624806', 'Lucasmonteirosousa@hotmail.com', '11971349190', 5, 10, 'Os assuntos e a forma de exposição das matérias foi sensacional.', 1, 1002, 'DIAGNOSTICO SISTEMA CR - NIVEL I', '2025-04-03 19:03:47'),
-(65, 'Gerson Rios de Oliveira', '01631684310', 'gersonrios2108@gmail.com', '63991083131', 5, 10, 'Excelente conteúdo', 1, 1002, 'DIAGNOSTICO SISTEMA CR - NIVEL I', '2025-04-03 19:06:22'),
-(66, 'Daniel  Wagner  mussarelli', '19036913896', 'danielmussarelli@h0tmail', '19997822648', 5, 10, 'Conteúdo  muito bom', 1, 1002, 'DIAGNOSTICO SISTEMA CR - NIVEL I', '2025-04-03 19:07:55'),
-(67, 'Thiago turatto', '05021606913', 'mecanicaturatto@gmail.com', '46984042725', 5, 10, 'Conhecimento', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-04-03 20:01:35'),
-(68, 'William schmitz', '07528696986', 'Willi_schmitz@hotmail.com', '46999167513', 5, 10, 'Satisfeito com o conteúdo explicado e qualidade da aula do professor', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-04-03 20:01:46'),
-(69, 'Flávio divino Pereira da silva', '87658550191', 'Itacar193@gmail.com', '62996049163', 5, 10, 'Qualidade e profissionalismo', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-04-03 20:01:56'),
-(70, 'Lucas Kolling', '00430376073', 'kolling_lucas@hotmail.com', '51996611802', 5, 10, 'Professor muito qualificado, bom material, boa estrutura, didática muito boa.', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-04-03 20:02:22'),
-(71, 'Luan Secchi', '08155731979', 'luanssecchi@gmail.com', '46999180430', 5, 10, 'Didática utilizada excelente.', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-04-03 20:02:50'),
-(72, 'Carlos Augusto Lameira de Castro', '32954034220', 'cdcastro.cdm@senaipa.org.br', '91989650512', 5, 5, 'Muito bom', 1, 3010, 'HIBRIDO Y ELETRICO - NIVEL II', '2025-04-03 20:03:18'),
-(73, 'Vinicius Oliveira Alves', '12649371641', 'viniciusoliveira449@hotmail.com', '35991341554', 5, 10, 'Excelente curso', 1, 1003, 'DIAGNOSTICO SISTEMA CR - NIVEL II', '2025-04-10 18:50:11'),
-(74, 'Renato v. Maydana', '33359240880', 'RE.DIESEL@yahoo.com', '12974048563', 3, 7, NULL, 1, 1003, 'DIAGNOSTICO SISTEMA CR - NIVEL II', '2025-04-10 18:50:30'),
-(75, 'Gerson Rios de Oliveira', '01631684310', 'gersonrios2108@gmail.com', '63991083131', 5, 10, NULL, 1, 1003, 'DIAGNOSTICO SISTEMA CR - NIVEL II', '2025-04-10 18:50:39'),
-(76, 'Mateus Souza De Andrade', '45259080840', 'mateus.andrade@br.bosch.com', '19982302037', 5, 10, 'O professor explica muito bem e auxilia muito no entendimento dos conceitos tanto teóricos quanto também empíricos.', 1, 50013, 'AR ACONDICIONADO Y CLIMA', '2025-04-16 19:45:30'),
-(77, 'Osvaldo  assinou filho', '09663477815', 'cucamaster@hotmail.com', '11995021535', 5, 10, 'Explicação  técnicas   detalhadas demonstrações  dos equipamentos', 1, 50013, 'AR ACONDICIONADO Y CLIMA', '2025-04-16 19:47:34'),
-(78, 'Diego Biazzin', '34290911870', 'biazzinadvogado@gmail.com', '13996038390', 5, 10, 'Muita técnica afinada.', 1, 50013, 'AR ACONDICIONADO Y CLIMA', '2025-04-16 19:48:17'),
-(79, 'Rafael dos Santos', '53969570263', 'rafasants.ts@gmail.com', '92985295430', 5, 10, 'Muito bom esse curso, o professor é muito bom explicar muito é tira todas as dúvidas e gostei muito...e pretendo voltar outra vez...e muito obrigado pela oportunidade que estão fazendo com esses cursos...', 1, 50013, 'AR ACONDICIONADO Y CLIMA', '2025-04-16 19:49:55'),
-(80, 'Pablo', '06689912914', 'Polatopablo0@gmail.com', '17996187848', 5, 10, 'Professor top e super atendimento', 1, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-04-23 20:00:12'),
-(81, 'Alex  marinho', '09827845705', 'Alex.marinho505476@gmail.com', '21970170227', 5, 10, 'Quantidade e qualidade de informação.', 1, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-04-23 20:01:15'),
-(82, 'Railan da Silva de Oliveira', '14617427732', 'railanoliveira18@gmail.com', '21975316668', 5, 10, 'Curso muito bom, consegui aprender bastante coisa', 0, 2001, 'DIAGNOSTICO DE SISTEMA DE INJECAO ELETRONICA', '2025-04-23 20:01:48');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `technical_dictionary`
+-- Table structure for table `materials`
+--
+
+CREATE TABLE `materials` (
+  `id` int(11) NOT NULL,
+  `training_id` int(5) NOT NULL,
+  `material_name` varchar(100) NOT NULL,
+  `material_link` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nps_responses`
+--
+
+CREATE TABLE `nps_responses` (
+  `id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating` tinyint(4) NOT NULL,
+  `comments` text DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `technical_dictionary`
 --
 
 CREATE TABLE `technical_dictionary` (
@@ -1259,7 +1168,7 @@ CREATE TABLE `technical_dictionary` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `technical_dictionary`
+-- Dumping data for table `technical_dictionary`
 --
 
 INSERT INTO `technical_dictionary` (`PORTUGUESE`, `INGLES`, `ALEMAN`, `ESPANOL`) VALUES
@@ -5588,19 +5497,19 @@ INSERT INTO `technical_dictionary` (`PORTUGUESE`, `INGLES`, `ALEMAN`, `ESPANOL`)
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `training`
+-- Table structure for table `trainings`
 --
 
-CREATE TABLE `training` (
+CREATE TABLE `trainings` (
   `training_id` int(5) NOT NULL,
-  `training_name` varchar(250) NOT NULL
+  `training_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `training`
+-- Dumping data for table `trainings`
 --
 
-INSERT INTO `training` (`training_id`, `training_name`) VALUES
+INSERT INTO `trainings` (`training_id`, `training_name`) VALUES
 (1002, 'DIAGNOSTICO SISTEMA CR - NIVEL I'),
 (1003, 'DIAGNOSTICO SISTEMA CR - NIVEL II'),
 (1010, 'REPARO BOMBAS DE ALTA PRESSAO COMMON RAIL'),
@@ -5622,106 +5531,134 @@ INSERT INTO `training` (`training_id`, `training_name`) VALUES
 (7001, 'VEICULO HIBRIDO-ELETRICO FASE 1'),
 (7020, 'GESA - GESTAO EMPRESAS SERV AUTOMOTIVOS'),
 (7032, 'EVO AUTOMOTIVA WLA'),
-(7050, 'EVO AUTOMOTIVA BR'),
-(9999, 'TRAININGAPP MANAGEMENT'),
-(50011, 'Diesel electronico MA'),
-(50012, 'CONSULTOR DE SERVICIOS'),
-(50013, 'AR ACONDICIONADO Y CLIMA'),
-(50021, 'ESP_DIAG_VEH_LIV'),
-(50022, 'CURSO HDI');
+(7050, 'EVO AUTOMOTIVA BR');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `training_material`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `training_material` (
-  `training_id` int(5) NOT NULL,
-  `material` varchar(250) NOT NULL,
-  `link` varchar(250) NOT NULL
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `role` enum('student','trainer') NOT NULL,
+  `terms_accepted_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `training_material`
---
-
-INSERT INTO `training_material` (`training_id`, `material`, `link`) VALUES
-(4010, '4010 - Apostilla_ADAS_2024_v1.0_.pdf', '4010 - Apostilla_ADAS_2024_v1.0_.pdf'),
-(4010, '4010 - Apresentaçao_ADAS_2024_v1.0_.pdf', '4010 - Apres_ADAS_2024_v1.0_.pdf'),
-(2003, '2003 - KTS 590 Avançado 2024_apostila_aluno.pdf', '2003 - KTS 590 Avançado 2024_apostila_aluno.pdf'),
-(2003, '2003 - KTS 590_Avançado2024.pdf', '2003 - KTS 590_Avançado2024.pdf'),
-(3002, '3002 - Osciloscopio e Interpretação de Sinais_2024_APOSTILA.pdf', '3002 - Osciloscopio e Interpretação de Sinais_2024_APOSTILA.pdf'),
-(3002, '3002 - Osciloscópio e Interpretação de Sinais_2024.pdf', '3002 - Osciloscópio e Interpretação de Sinais_2024.pdf'),
-(50011, '50011- Diagnóstico de Sistemas Diesel Eletrônico_apostila.pdf', '50011- Diagnóstico de Sistemas Diesel Eletrônico_apostila.pdf'),
-(50011, '50011 - Diagnóstico de Sistemas Diesel Eletrônico apresentação.pdf', '50011 - Diagnóstico de Sistemas Diesel Eletrônico apresentação.pdf'),
-(7001, '7001 - Veículos Elétrico e  Híbridos - Fase I - apostila. _2024.pdf', '7001 - Veículos Elétrico e  Híbridos - Fase I - apostila. _2024.pdf'),
-(7001, '7001 - Veículos Elétrico e  Híbridos - Fase I - apres. _2024.pdf', '7001 - Veículos Elétrico e  Híbridos - Fase I - apres. _2024.pdf'),
-(50012, '50012 - Consultor de servicos automotivos_apostila.pdf', '50012 - Consultor de servicos automotivos_apostila.pdf'),
-(3010, '3010 - EV_HEV_FASE II .pdf', '3010 - EV_HEV_FASE II .pdf'),
-(3005, '3005 - EL_VEH_APP_APOSTILLA.pdf', '3005 - EL_VEH_APP_APOSTILLA.pdf'),
-(3005, '3005 - EL_VEHICULAR_APLICAD_PRESENTAÇAO.pdf', '3005 - EL_VEHICULAR_APLICAD_PRESENTAÇAO.pdf'),
-(50021, '50021_ESPECIALIZACION_LIVIANO_LAM_APOSTILLA.pdf', '50021_ESPECIALIZACION_LIVIANO_LAM_APOSTILLA.pdf'),
-(50021, '50021_ESPECIALIZACION_LIVIANO_LAM_PRESENTACION.pdf', '50021_ESPECIALIZACION_LIVIANO_LAM_PRESENTACION.pdf'),
-(1002, '1002 - DIAG_SIST_CR_I_APOSTILLA.pdf', '1002 - DIAG_SIST_CR_I_APOSTILLA.pdf'),
-(1002, '1002 - DIAG_SIST_CR_I_APRESENTAÇÂO.pdf', '1002 - DIAG_SIST_CR_I_APRESENTAÇÂO.pdf'),
-(1003, '1003 - DIAG_SIST_CR_II_APESENTAÇÂO.pdf', '1003 - DIAG_SIST_CR_II_APESENTAÇÂO.pdf'),
-(1003, '1003 - DIAG_SIST_CR_II_APOSTILLA.pdf', '1003 - DIAG_SIST_CR_II_APOSTILLA.pdf'),
-(50022, '50022 - HDI Presentacion.pdf', '50022 - HDI Presentacion.pdf'),
-(50013, '50013_AR_ACONDICIONADO_CLIMATIZADOR_APOSTILLA.pdf', '50013_AR_ACONDICIONADO_CLIMATIZADOR_APOSTILLA.pdf'),
-(50013, '50013_AR_ACONDICIONADO_CLIMATIZADOR_APRESE.pdf', '50013_AR_ACONDICIONADO_CLIMATIZADOR_APRESE.pdf'),
-(2001, '2001_0_DIAG_INJ_ELEC_0_APOSTILLA.pdf', '2001_0_DIAG_INJ_ELEC_0_APOSTILLA.pdf'),
-(2001, '2001_0_DIAG_INJ_ELEC_0_APRESENTACAO.pdf', '2001_0_DIAG_INJ_ELEC_0_APRESENTACAO.pdf'),
-(3003, '3003 - EV_HEV_FASE  III  .pdf', '3003 - EV_HEV_FASE  III  .pdf');
-
---
--- Índices para tabelas despejadas
+-- Indexes for dumped tables
 --
 
 --
--- Índices de tabela `event`
+-- Indexes for table `events`
 --
-ALTER TABLE `event`
-  ADD PRIMARY KEY (`training_id`,`start_date`,`end_date`);
-
---
--- Índices de tabela `nps_survey`
---
-ALTER TABLE `nps_survey`
+ALTER TABLE `events`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_submission` (`training_id`,`name`,`created_date`);
+  ADD KEY `training_id` (`training_id`),
+  ADD KEY `instructor_id` (`instructor_id`);
 
 --
--- Índices de tabela `training`
+-- Indexes for table `event_registrations`
 --
-ALTER TABLE `training`
+ALTER TABLE `event_registrations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `event_id` (`event_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `materials`
+--
+ALTER TABLE `materials`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `training_id` (`training_id`);
+
+--
+-- Indexes for table `nps_responses`
+--
+ALTER TABLE `nps_responses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `event_id` (`event_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `trainings`
+--
+ALTER TABLE `trainings`
   ADD PRIMARY KEY (`training_id`);
 
 --
--- Índices de tabela `training_material`
+-- Indexes for table `users`
 --
-ALTER TABLE `training_material`
-  ADD KEY `foreign_key` (`training_id`);
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
---
-
---
--- AUTO_INCREMENT de tabela `nps_survey`
---
-ALTER TABLE `nps_survey`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
-
---
--- Restrições para tabelas despejadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Restrições para tabelas `training_material`
+-- AUTO_INCREMENT for table `events`
 --
-ALTER TABLE `training_material`
-  ADD CONSTRAINT `foreign_key` FOREIGN KEY (`training_id`) REFERENCES `training` (`training_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `event_registrations`
+--
+ALTER TABLE `event_registrations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `materials`
+--
+ALTER TABLE `materials`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `nps_responses`
+--
+ALTER TABLE `nps_responses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`training_id`) REFERENCES `trainings` (`training_id`),
+  ADD CONSTRAINT `events_ibfk_2` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `event_registrations`
+--
+ALTER TABLE `event_registrations`
+  ADD CONSTRAINT `event_registrations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+  ADD CONSTRAINT `event_registrations_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `materials`
+--
+ALTER TABLE `materials`
+  ADD CONSTRAINT `materials_ibfk_1` FOREIGN KEY (`training_id`) REFERENCES `trainings` (`training_id`);
+
+--
+-- Constraints for table `nps_responses`
+--
+ALTER TABLE `nps_responses`
+  ADD CONSTRAINT `nps_responses_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+  ADD CONSTRAINT `nps_responses_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
